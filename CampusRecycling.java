@@ -1,11 +1,11 @@
 public class CampusRecycling {
     public static void main(String[] args) {
+        // testing
         Graph newGraph = new Graph();
         newGraph.addVertex("someVertex");
         newGraph.addVertex("someVertex1");
         newGraph.addVertex("someVertex2");
         newGraph.addEdge("someVertex", "someVertex1");
-        // System.out.println(newGraph.getDegree("someVertex2"));
         System.out.println(newGraph.getDegree("someVertex"));
         System.out.println(newGraph.getDegree("someVertex1"));
         System.out.println(newGraph.getNumV());
