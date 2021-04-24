@@ -1,7 +1,6 @@
 public class Edge {
     private Vertex origin;
     private Vertex endPoint;
-    // weight is distance
     private int weight;
 
     public Edge(Vertex origin, Vertex endPoint) {
@@ -24,6 +23,14 @@ public class Edge {
 
     public void setEndPoint(Vertex endPoint) {
         this.endPoint = endPoint;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     public Vertex getOpposite(Vertex vertex) {
