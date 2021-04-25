@@ -3,10 +3,10 @@ public class Edge {
     private Vertex endPoint;
     private int weight;
 
-    public Edge(Vertex origin, Vertex endPoint) {
+    public Edge(Vertex origin, Vertex endPoint, int weight) {
         this.origin = origin;
         this.endPoint = endPoint;
-        this.weight = 0;
+        this.weight = weight;
     }
 
     public Vertex getOrigin() {

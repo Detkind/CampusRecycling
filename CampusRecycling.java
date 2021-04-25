@@ -5,17 +5,18 @@ public class CampusRecycling {
         newGraph.addVertex("someVertex");
         newGraph.addVertex("someVertex1");
         newGraph.addVertex("someVertex2");
-        newGraph.addEdge("someVertex", "someVertex1");
-        newGraph.addEdge("someVertex", "someVertex2");
-        System.out.println(newGraph.getDegree("someVertex"));
-        // System.out.println(newGraph.getDegree("someVertex1"));
-        // System.out.println(newGraph.getNumV());
-        System.out.println(newGraph.incidentEdges("someVertex"));
+        newGraph.addEdge("someVertex", "someVertex1", 1);
+        newGraph.addEdge("someVertex", "someVertex2", 2);
+        newGraph.addEdge("someVertex1", "someVertex2", 3);
+        System.out.println("degree of someVertex: " + newGraph.getDegree("someVertex"));
+        System.out.println("degree of someVertex1: " + newGraph.getDegree("someVertex1"));
+        System.out.println("numV: " + newGraph.getNumV());
+        System.out.println("incident edges: " + newGraph.incidentEdges("someVertex"));
         newGraph.removeEdge("someVertex", "someVertex2");
-        System.out.println(newGraph.getDegree("someVertex"));
-        System.out.println(newGraph.incidentEdges("someVertex").getValueAt(0).getEndPoint().getData());
-        System.out.println(newGraph.getEdge("someVertex", "someVertex1").getEndPoint().getData());
-        System.out.println(newGraph.edgeSum());
+        System.out.println("degree of someVertex after remove edge: " + newGraph.getDegree("someVertex"));
+        System.out.println("incident edges after remove edge: " + newGraph.incidentEdges("someVertex").getValueAt(0).getEndPoint().getData());
+        System.out.println("get edge of someVertex and someVertex1: " + newGraph.getEdge("someVertex", "someVertex1"));
+        System.out.println("edge sum: " + newGraph.edgeSum());
     }
 }
 
@@ -41,16 +42,16 @@ class Graph {
         return adjList.traverseTo(vertex).getEdges().size();
     }
     
-    public void addEdge(String origin, String endPoint) {
+    public void addEdge(String origin, String endPoint, int weight) {
         // get the vertex edge pair at origin
         VertexEdgeListPair VertexEdgesPair = adjList.traverseTo(origin);
         // create edge from origin to endpoint and add edge to the linked list of edges at origin
-        VertexEdgesPair.getEdges().append(new Edge(VertexEdgesPair.getVertex(), adjList.traverseTo(endPoint).getVertex()));
+        VertexEdgesPair.getEdges().append(new Edge(VertexEdgesPair.getVertex(), adjList.traverseTo(endPoint).getVertex(), weight));
         
         // if graph is undirected, add edge from endpoint to origin to the linked list of edges at endpoint
         if (directed == false) {
             VertexEdgesPair = adjList.traverseTo(endPoint);
-            VertexEdgesPair.getEdges().append(new Edge(VertexEdgesPair.getVertex(), adjList.traverseTo(origin).getVertex()));
+            VertexEdgesPair.getEdges().append(new Edge(VertexEdgesPair.getVertex(), adjList.traverseTo(origin).getVertex(), weight));
         }
     }
 
