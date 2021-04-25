@@ -6,16 +6,20 @@ public class CampusRecycling {
         newGraph.addVertex("someVertex1");
         newGraph.addVertex("someVertex2");
         newGraph.addEdge("someVertex", "someVertex1");
+        newGraph.addEdge("someVertex", "someVertex2");
         System.out.println(newGraph.getDegree("someVertex"));
-        System.out.println(newGraph.getDegree("someVertex1"));
-        System.out.println(newGraph.getNumV());
+        // System.out.println(newGraph.getDegree("someVertex1"));
+        // System.out.println(newGraph.getNumV());
         System.out.println(newGraph.incidentEdges("someVertex"));
+        newGraph.removeEdge("someVertex", "someVertex2");
+        System.out.println(newGraph.getDegree("someVertex"));
+        System.out.println(newGraph.incidentEdges("someVertex").getValueAt(0).getEndPoint().getData());
+        System.out.println(newGraph.getEdge("someVertex", "someVertex1").getEndPoint().getData());
     }
 }
 
 class Graph {
     private LinkedList adjList;
-    private int degree;
     private boolean directed;
     private int numV;
 
@@ -48,6 +52,26 @@ class Graph {
             VertexEdgesPair = adjList.traverseTo(endPoint);
             VertexEdgesPair.getEdges().append(new Edge(VertexEdgesPair.getVertex(), adjList.traverseTo(origin).getVertex()));
         }
+    }
+
+    public void removeEdge(String origin, String endPoint) {
+        LinkedListEdges edges = adjList.traverseTo(origin).getEdges();
+        for (int i = 0; i < edges.size(); i++) {
+            if (edges.getValueAt(i).getEndPoint().getData() == endPoint) {
+                edges.deleteAt(i);
+                break;
+            }
+        }
+    }
+
+    public Edge getEdge(String origin, String endPoint) {
+        LinkedListEdges edges = adjList.traverseTo(origin).getEdges();
+        for (int i = 0; i < edges.size(); i++) {
+            if (edges.getValueAt(i).getEndPoint().getData() == endPoint) {
+                return edges.getValueAt(i);
+            }
+        }
+        return null;
     }
 
     public LinkedListEdges incidentEdges(String vertex) {
