@@ -15,6 +15,7 @@ public class CampusRecycling {
         System.out.println(newGraph.getDegree("someVertex"));
         System.out.println(newGraph.incidentEdges("someVertex").getValueAt(0).getEndPoint().getData());
         System.out.println(newGraph.getEdge("someVertex", "someVertex1").getEndPoint().getData());
+        System.out.println(newGraph.edgeSum());
     }
 }
 
@@ -29,7 +30,6 @@ class Graph {
         numV = 0;
     }
 
-    
     public void addVertex(String vertex) {
         // appends a vertex edge pair with the new vertex and a linked list of edges
         adjList.append(new VertexEdgeListPair(new Vertex(vertex), new LinkedListEdges()));
@@ -55,7 +55,9 @@ class Graph {
     }
 
     public void removeEdge(String origin, String endPoint) {
+        // retreive edges at origin vertex
         LinkedListEdges edges = adjList.traverseTo(origin).getEdges();
+        // find edge that corresponds with given endpoint and delete it
         for (int i = 0; i < edges.size(); i++) {
             if (edges.getValueAt(i).getEndPoint().getData() == endPoint) {
                 edges.deleteAt(i);
@@ -65,13 +67,32 @@ class Graph {
     }
 
     public Edge getEdge(String origin, String endPoint) {
+        // retreive edges at origin vertex
         LinkedListEdges edges = adjList.traverseTo(origin).getEdges();
+        // find edge that corresponds with given endpoint and return it
         for (int i = 0; i < edges.size(); i++) {
             if (edges.getValueAt(i).getEndPoint().getData() == endPoint) {
                 return edges.getValueAt(i);
             }
         }
+        // return null if edge not found
         return null;
+    }
+
+    public int edgeSum() {
+        // initialize the sum of weights of edges
+        int edgeWeightSum = 0;
+        // iterate through all the vertices in the adjlist
+        for (int i = 0; i < adjList.size(); i++) {
+            // retreive edges of vertex
+            LinkedListEdges edges = adjList.getValueAt(i).getEdges();
+            // sum up weights of edges
+            for (int j = 0; j < edges.size(); j++) {
+                edgeWeightSum += edges.getValueAt(j).getWeight();
+            }
+        }
+        // return the sum of weights of edges 
+        return edgeWeightSum;
     }
 
     public LinkedListEdges incidentEdges(String vertex) {
