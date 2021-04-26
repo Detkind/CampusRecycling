@@ -8,15 +8,19 @@ public class CampusRecycling {
         newGraph.addEdge("someVertex", "someVertex1", 1);
         newGraph.addEdge("someVertex", "someVertex2", 2);
         newGraph.addEdge("someVertex1", "someVertex2", 3);
+        newGraph.addEdge("someVertex1", "someVertex", 3);
         System.out.println("degree of someVertex: " + newGraph.getDegree("someVertex"));
         System.out.println("degree of someVertex1: " + newGraph.getDegree("someVertex1"));
         System.out.println("numV: " + newGraph.getNumV());
         System.out.println("incident edges: " + newGraph.incidentEdges("someVertex"));
-        newGraph.removeEdge("someVertex", "someVertex2");
+        // newGraph.removeEdge("someVertex", "someVertex2");
         System.out.println("degree of someVertex after remove edge: " + newGraph.getDegree("someVertex"));
         System.out.println("incident edges after remove edge: " + newGraph.incidentEdges("someVertex").getValueAt(0).getEndPoint().getData());
         System.out.println("get edge of someVertex and someVertex1: " + newGraph.getEdge("someVertex", "someVertex1"));
         System.out.println("edge sum: " + newGraph.edgeSum());
+        System.out.println("all edges: " + newGraph.getAllEdges().size());
+        newGraph.removeVertex("someVertex");
+        System.out.println("numv " + newGraph.getNumV());
         System.out.println("all edges: " + newGraph.getAllEdges().size());
     }
 }
@@ -29,13 +33,32 @@ class Graph {
     public Graph() {
         adjList = new LinkedList();
         directed = true;
-        numV = 0;
+        numV = adjList.size();
     }
 
     public void addVertex(String vertex) {
         // appends a vertex edge pair with the new vertex and a linked list of edges
         adjList.append(new VertexEdgeListPair(new Vertex(vertex), new LinkedListEdges()));
-        numV++;
+        // adjust numV
+        numV = adjList.size();
+    }
+
+    public void removeVertex(String vertex) {
+        // delete vertex edge pair 
+        adjList.deleteAt(adjList.positionOf(adjList.traverseTo(vertex)));
+        // iterate through all the vertices in the adjlist
+        for (int i = 0; i < adjList.size(); i++) {
+            // retreive edges of vertex
+            LinkedListEdges edges = adjList.getValueAt(i).getEdges();
+            // delete all edges at vertex that point to removed vertex
+            for (int j = 0; j < edges.size(); j++) {
+                if (edges.getValueAt(j).getEndPoint().getData() == vertex) {
+                    edges.deleteAt(j);
+                }
+            }
+        }
+        // adjust numV
+        numV = adjList.size();
     }
     
     public int getDegree(String vertex) {
@@ -118,7 +141,7 @@ class Graph {
         // return a linked list of all the edges
         return allEdges;
     }
-    
+
     public int getNumV() {
         return numV;
     }
