@@ -17,6 +17,7 @@ public class CampusRecycling {
         System.out.println("incident edges after remove edge: " + newGraph.incidentEdges("someVertex").getValueAt(0).getEndPoint().getData());
         System.out.println("get edge of someVertex and someVertex1: " + newGraph.getEdge("someVertex", "someVertex1"));
         System.out.println("edge sum: " + newGraph.edgeSum());
+        System.out.println("all edges: " + newGraph.getAllEdges().size());
     }
 }
 
@@ -81,7 +82,7 @@ class Graph {
     }
 
     public int edgeSum() {
-        // initialize the sum of weights of edges
+        // declare and initialize the sum of weights of edges
         int edgeWeightSum = 0;
         // iterate through all the vertices in the adjlist
         for (int i = 0; i < adjList.size(); i++) {
@@ -103,5 +104,21 @@ class Graph {
     
     public int getNumV() {
         return numV;
+    }
+
+    public LinkedListEdges getAllEdges() {
+        // declare and initialize a linked list of all edges 
+        LinkedListEdges allEdges = new LinkedListEdges();
+        // iterate through all vertices in the adjlist
+        for (int i = 0; i < adjList.size(); i++) {
+            // retreive edges of vertex
+            LinkedListEdges edges = adjList.getValueAt(i).getEdges();
+            // add all the edges of the vertex to linked list of all edges
+            for (int j = 0; j < edges.size(); j++) {
+                allEdges.append(edges.getValueAt(j));
+            }
+        }
+        // return a linked list of all the edges
+        return allEdges;
     }
 }
