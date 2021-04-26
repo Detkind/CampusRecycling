@@ -5,10 +5,13 @@ public class CampusRecycling {
         newGraph.addVertex("someVertex");
         newGraph.addVertex("someVertex1");
         newGraph.addVertex("someVertex2");
+        newGraph.addVertex("someVertex3");
         newGraph.addEdge("someVertex", "someVertex1", 1);
         newGraph.addEdge("someVertex", "someVertex2", 2);
         newGraph.addEdge("someVertex1", "someVertex2", 3);
         newGraph.addEdge("someVertex1", "someVertex", 3);
+        newGraph.addEdge("someVertex2", "someVertex3", 3);
+        newGraph.addEdge("someVertex1", "someVertex3", 3);
         System.out.println("degree of someVertex: " + newGraph.getDegree("someVertex"));
         System.out.println("degree of someVertex1: " + newGraph.getDegree("someVertex1"));
         System.out.println("numV: " + newGraph.getNumV());
@@ -19,9 +22,19 @@ public class CampusRecycling {
         System.out.println("get edge of someVertex and someVertex1: " + newGraph.getEdge("someVertex", "someVertex1"));
         System.out.println("edge sum: " + newGraph.edgeSum());
         System.out.println("all edges: " + newGraph.getAllEdges().size());
-        newGraph.removeVertex("someVertex");
+        // newGraph.removeVertex("someVertex");
         System.out.println("numv " + newGraph.getNumV());
         System.out.println("all edges: " + newGraph.getAllEdges().size());
+        System.out.print("BFS: ");
+        LinkedList bfs = newGraph.BFS("someVertex");
+        for (int i = 0; i < bfs.size(); i++) {
+            System.out.print(bfs.getValueAt(i).getVertex().getData() + " ");
+        }
+        System.out.print("\nDFS: ");
+        LinkedList dfs = newGraph.DFS("someVertex");
+        for (int i = 0; i < dfs.size(); i++) {
+            System.out.print(dfs.getValueAt(i).getVertex().getData() + " ");
+        }
     }
 }
 
@@ -29,11 +42,15 @@ class Graph {
     private LinkedList adjList;
     private boolean directed;
     private int numV;
-
+    
     public Graph() {
         adjList = new LinkedList();
         directed = true;
         numV = adjList.size();
+    }
+    
+    public int getNumV() {
+        return numV;
     }
 
     public void addVertex(String vertex) {
@@ -125,7 +142,6 @@ class Graph {
         return adjList.traverseTo(vertex).getEdges();
     }
     
-    
     public LinkedListEdges getAllEdges() {
         // declare and initialize a linked list of all edges 
         LinkedListEdges allEdges = new LinkedListEdges();
@@ -142,7 +158,85 @@ class Graph {
         return allEdges;
     }
 
-    public int getNumV() {
-        return numV;
+    public LinkedList BFS(String vertex) {
+        // declare and initialize linked list of visited vertex edge list pairs
+        LinkedList visitedList = new LinkedList();
+        // declare and initialize queue
+        Queue queue = new Queue();
+        // declare and initialize visited boolean array to represent visited vertices
+        boolean[] visited = new boolean[adjList.size()];
+
+        // set everything in visited array to false since no vertex has been visited yet
+        for (int i = 0; i < adjList.size(); i++) {
+            visited[i] = false;
+        }
+
+        // enqueue the first vertex
+        queue.enqueue(adjList.traverseTo(vertex));
+        // set element in visited array at vertex as true to represent visited vertex
+        visited[adjList.positionOf(adjList.traverseTo(vertex))] = true;
+
+        // perform BFS
+        while (!queue.isEmpty()) {
+            // dequeue from queue
+            VertexEdgeListPair curPair = queue.dequeue();
+            // append the dequeued vertex edge list pair to the visited list
+            visitedList.append(curPair);
+            // retreive edges of vertex
+            LinkedListEdges edgesAtCurPair = curPair.getEdges();
+            // iterate through all the edges of vertex
+            for (int j = 0; j < edgesAtCurPair.size(); j++) {
+                // retreive vertex edge list pair neighbor of vertex
+                VertexEdgeListPair neighborVertexEdgeListPair = adjList.traverseTo(edgesAtCurPair.getValueAt(j).getEndPoint().getData());
+                // if neighbor hasn't been visited, enqueue neighbor to queue and set it as true in visited array
+                if (visited[adjList.positionOf(neighborVertexEdgeListPair)] == false) {
+                    queue.enqueue(neighborVertexEdgeListPair);
+                    visited[adjList.positionOf(neighborVertexEdgeListPair)] = true;
+                }
+            }
+        }
+        // return visited list of vertex edge list pairs
+        return visitedList;
+    }
+
+    public LinkedList DFS(String vertex) {
+        // declare and initialize linked list of visited vertex edge list pairs
+        LinkedList visitedList = new LinkedList();
+        // declare and initialize stack
+        Stack stack = new Stack();
+        // declare and initialize visited boolean array to represent visited vertices
+        boolean[] visited = new boolean[adjList.size()];
+
+        // set everything in visited array to false since no vertex has been visited yet
+        for (int i = 0; i < adjList.size(); i++) {
+            visited[i] = false;
+        }
+
+        // push the first vertex
+        stack.push(adjList.traverseTo(vertex));
+        // set element in visited array at vertex as true to represent visited vertex
+        visited[adjList.positionOf(adjList.traverseTo(vertex))] = true;
+
+        // perform DFS
+        while (!stack.isEmpty()) {
+            // pop from stack
+            VertexEdgeListPair curPair = stack.pop();
+            // append the popped vertex edge list pair to the visited list
+            visitedList.append(curPair);
+            // retreive edges of vertex
+            LinkedListEdges edgesAtCurPair = curPair.getEdges();
+            // iterate through all the edges of vertex
+            for (int j = 0; j < edgesAtCurPair.size(); j++) {
+                // retreive vertex edge list pair neighbor of vertex
+                VertexEdgeListPair neighborVertexEdgeListPair = adjList.traverseTo(edgesAtCurPair.getValueAt(j).getEndPoint().getData());
+                // if neighbor hasn't been visited, push neighbor to stack and set it as true in visited array
+                if (visited[adjList.positionOf(neighborVertexEdgeListPair)] == false) {
+                    stack.push(neighborVertexEdgeListPair);
+                    visited[adjList.positionOf(neighborVertexEdgeListPair)] = true;
+                }
+            }
+        }
+        // return visited list of vertex edge list pairs
+        return visitedList;
     }
 }
