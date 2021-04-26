@@ -102,10 +102,7 @@ class Graph {
         return adjList.traverseTo(vertex).getEdges();
     }
     
-    public int getNumV() {
-        return numV;
-    }
-
+    
     public LinkedListEdges getAllEdges() {
         // declare and initialize a linked list of all edges 
         LinkedListEdges allEdges = new LinkedListEdges();
@@ -120,5 +117,9 @@ class Graph {
         }
         // return a linked list of all the edges
         return allEdges;
+    }
+    
+    public int getNumV() {
+        return numV;
     }
 }
