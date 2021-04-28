@@ -1,40 +1,94 @@
 public class CampusRecycling {
     public static void main(String[] args) {
-        // testing
         Graph newGraph = new Graph();
-        newGraph.addVertex("someVertex");
-        newGraph.addVertex("someVertex1");
-        newGraph.addVertex("someVertex2");
-        newGraph.addVertex("someVertex3");
-        newGraph.addEdge("someVertex", "someVertex1", 1);
-        newGraph.addEdge("someVertex", "someVertex2", 2);
-        newGraph.addEdge("someVertex1", "someVertex2", 3);
-        newGraph.addEdge("someVertex1", "someVertex", 3);
-        newGraph.addEdge("someVertex2", "someVertex3", 3);
-        newGraph.addEdge("someVertex1", "someVertex3", 3);
-        System.out.println("degree of someVertex: " + newGraph.getDegree("someVertex"));
-        System.out.println("degree of someVertex1: " + newGraph.getDegree("someVertex1"));
-        System.out.println("numV: " + newGraph.getNumV());
-        System.out.println("incident edges: " + newGraph.incidentEdges("someVertex"));
-        // newGraph.removeEdge("someVertex", "someVertex2");
-        System.out.println("degree of someVertex after remove edge: " + newGraph.getDegree("someVertex"));
-        System.out.println("incident edges after remove edge: " + newGraph.incidentEdges("someVertex").getValueAt(0).getEndPoint().getData());
-        System.out.println("get edge of someVertex and someVertex1: " + newGraph.getEdge("someVertex", "someVertex1"));
-        System.out.println("edge sum: " + newGraph.edgeSum());
-        System.out.println("all edges: " + newGraph.getAllEdges().size());
-        // newGraph.removeVertex("someVertex");
-        System.out.println("numv " + newGraph.getNumV());
-        System.out.println("all edges: " + newGraph.getAllEdges().size());
-        System.out.print("BFS: ");
-        LinkedList bfs = newGraph.BFS("someVertex");
-        for (int i = 0; i < bfs.size(); i++) {
-            System.out.print(bfs.getValueAt(i).getVertex().getData() + " ");
-        }
-        System.out.print("\nDFS: ");
-        LinkedList dfs = newGraph.DFS("someVertex");
-        for (int i = 0; i < dfs.size(); i++) {
-            System.out.print(dfs.getValueAt(i).getVertex().getData() + " ");
-        }
+        newGraph.addVertex("Memorial Gymnasium");
+        newGraph.addVertex("Hale Hall");
+        newGraph.addVertex("George T. Madison Hall");
+        newGraph.addVertex("Robinson Hall");
+        newGraph.addVertex("Woodard Hall");
+        newGraph.addVertex("Band Building");
+        newGraph.addVertex("University Hall");
+        newGraph.addVertex("Jay Taylor Visual Arts Center");
+        newGraph.addVertex("Phillips Laboratory School");
+        newGraph.addVertex("Institute for Micromanufacturing");
+        newGraph.addVertex("Biomedical Engineering Building");
+        newGraph.addVertex("Davison Hall");
+        newGraph.addVertex("Adams Classroom");
+        newGraph.addVertex("Howard Center");
+        newGraph.addVertex("Bogard Hall");
+        newGraph.addVertex("College of Business");
+        newGraph.addVertex("Carson-Taylor Hall");
+        newGraph.addVertex("Engineering Annex");
+        newGraph.addVertex("Nethken Hall");
+        newGraph.addVertex("Early Childhood Education Center");
+        newGraph.addVertex("Integrated Engineering and Science Building");
+        // edges from Memorial Gymnasium
+        newGraph.addEdge("Memorial Gymnasium", "Hale Hall", 370);
+        newGraph.addEdge("Memorial Gymnasium", "Robinson Hall", 250);
+        newGraph.addEdge("Memorial Gymnasium", "Jay Taylor Visual Arts Center", 508);
+        // edges from Hale Hall
+        newGraph.addEdge("Hale Hall", "Memorial Gymnasium", 370);
+        newGraph.addEdge("Hale Hall", "George T. Madison Hall", 550);
+        // edges from George T. Madison Hall
+        newGraph.addEdge("George T. Madison Hall", "Hale Hall", 550);
+        newGraph.addEdge("George T. Madison Hall", "University Hall", 1500);
+        newGraph.addEdge("George T. Madison Hall", "College of Business", 1500);
+        // edges from Robinson Hall
+        newGraph.addEdge("Robinson Hall", "Memorial Gymnasium", 250);
+        // edges from Woodard Hall
+        newGraph.addEdge("Woodard Hall", "Hale Hall", 1380);
+        newGraph.addEdge("Woodard Hall", "George T. Madison Hall", 1140);
+        // edges from Band Building
+        newGraph.addEdge("Band Building", "Memorial Gymnasium", 710);
+        newGraph.addEdge("Band Building", "Jay Taylor Visual Arts Center", 430);
+        // edges from University Hall
+        newGraph.addEdge("University Hall", "College of Business", 1200);
+        newGraph.addEdge("University Hall", "Engineering Annex", 920);
+        // edges from Jay Taylor Visual Arts Center
+        newGraph.addEdge("Jay Taylor Visual Arts Center", "Memorial Gymnasium", 508);
+        newGraph.addEdge("Jay Taylor Visual Arts Center", "Band Building", 430);
+        newGraph.addEdge("Jay Taylor Visual Arts Center", "Phillips Laboratory School", 521);
+        newGraph.addEdge("Jay Taylor Visual Arts Center", "Institute for Micromanufacturing", 1200);
+        // edges from Phillips Laboratory School
+        newGraph.addEdge("Phillips Laboratory School", "Institute for Micromanufacturing", 980);
+        newGraph.addEdge("Phillips Laboratory School", "Davison Hall", 715);
+        // edges from Institute for Micromanufacturing
+        newGraph.addEdge("Institute for Micromanufacturing", "Jay Taylor Visual Arts Center", 1200);
+        newGraph.addEdge("Institute for Micromanufacturing", "Biomedical Engineering Building", 550);
+        // edges from Biomedical Engineering Building
+        newGraph.addEdge("Biomedical Engineering Building", "Davison Hall", 1753);
+        // edges from Davison Hall
+        newGraph.addEdge("Davison Hall", "Woodard Hall", 1070);
+        newGraph.addEdge("Davison Hall", "Biomedical Engineering Building", 1753);
+        newGraph.addEdge("Davison Hall", "Adams Classroom", 200);
+        newGraph.addEdge("Davison Hall", "Carson-Taylor Hall", 1650);
+        // edges from Adams Classroom
+        newGraph.addEdge("Adams Classroom", "Davison Hall", 200);
+        // edges from Howard Center
+        newGraph.addEdge("Howard Center", "Davison Hall", 1850);
+        newGraph.addEdge("Howard Center", "Adams Classroom", 1680);
+        newGraph.addEdge("Howard Center", "Engineering Annex", 450);
+        // edges from Bogard Hall
+        newGraph.addEdge("Bogard Hall", "Howard Center", 350);
+        newGraph.addEdge("Bogard Hall", "Carson-Taylor Hall", 250);
+        // edges from College of Business
+        newGraph.addEdge("College of Business", "George T. Madison Hall", 1500);
+        newGraph.addEdge("College of Business", "University Hall", 420);
+        newGraph.addEdge("College of Business", "Early Childhood Education Center", 490);
+        newGraph.addEdge("College of Business", "Integrated Engineering and Science Building", 910);
+        // edges from Carson-Taylor Hall
+        newGraph.addEdge("Carson-Taylor Hall", "Engineering Annex", 450);
+        // edges from Engineering Annex
+        newGraph.addEdge("Engineering Annex", "Bogard Hall", 380);
+        newGraph.addEdge("Engineering Annex", "Nethken Hall", 210);
+        // edges from Nethken Hall
+        newGraph.addEdge("Nethken Hall", "Integrated Engineering and Science Building", 320);
+        // edges from Early Childhood Education Center
+        newGraph.addEdge("Early Childhood Education Center", "Integrated Engineering and Science Building", 1160);
+        // edges from Integrated Engineering and Science Building
+        newGraph.addEdge("Integrated Engineering and Science Building", "College of Business", 910);
+        newGraph.addEdge("Integrated Engineering and Science Building", "Nethken Hall", 320);
+        newGraph.addEdge("Integrated Engineering and Science Building", "Early Childhood Education Center", 490);
     }
 }
 
@@ -239,4 +293,12 @@ class Graph {
         // return visited list of vertex edge list pairs
         return visitedList;
     }
+
+    // public LinkedList dijkstrasAlgorithm(String vertex) {
+    //     LinkedList visitedList = new LinkedList();
+    //     boolean[] known = new boolean[adjList.size()];
+    //     int[] cost = new int[adjList.size()];
+    //     VertexEdgeListPair[] path = new VertexEdgeListPair[adjList.size()];
+        
+    // }
 }
