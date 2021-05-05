@@ -301,4 +301,47 @@ class Graph {
     //     VertexEdgeListPair[] path = new VertexEdgeListPair[adjList.size()];
         
     // }
+    public int minDist(int cost[],boolean visited[]) {
+    	int min = 9999999;
+    	int min_index = -1;
+    	for (int j = 0; j < adjList.size(); j++) {
+    		if(visited[j] == false && cost[j] <= min) {
+    			min = dist[j];
+    			min_index = j;
+    		}
+    	}
+    	return min_index;
+    	
+    }
+    
+    /*public LinkedList dijkstrasAlgorithm(String vertx) {
+    	LinkedList visitedList = new LinkedList();
+    	boolean[] known = new boolean[adjList.size()];
+        int[] cost = new int[adjList.size()];
+        // declare and initialize visited boolean array to represent visited vertices
+        boolean[] visited = new boolean[adjList.size()];
+        VertexEdgeListPair[] path = new VertexEdgeListPair[adjList.size()];
+        // set everything in visited array to false since no vertex has been visited yet
+        for (int i = 0; i < adjList.size(); i++) {
+        	cost[i] = 9999999;
+            visited[i] = false;
+        }
+        
+        for(int m = 0; m < adjList.size()-1; m++) {
+        	
+        	int k = minDist(cost,visited);
+        	visited[adjList.positionOf(adjList.traverseTo(vertex))] = true;
+        	
+        	LinkedListEdges edges = adjList.getValueAt(m).getEdges(); 
+        	for (int n = 0; n < edges.size()-1; n++) {
+        		if(!(visted[n]) && ())
+        	}
+        	if (!sptSet[v] && graph[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u] + graph[u][v] < dist[v])
+                dist[v] = dist[u] + graph[u][v];
+        	
+        	
+        }
+        
+    }*/
+    }
 }
