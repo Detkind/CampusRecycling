@@ -89,6 +89,7 @@ public class CampusRecycling {
         newGraph.addEdge("Integrated Engineering and Science Building", "College of Business", 910);
         newGraph.addEdge("Integrated Engineering and Science Building", "Nethken Hall", 320);
         newGraph.addEdge("Integrated Engineering and Science Building", "Early Childhood Education Center", 490);
+        newGraph.dijkstrasAlgorithm("Nethken Hall");
     }
 }
 
@@ -301,12 +302,13 @@ class Graph {
     //     VertexEdgeListPair[] path = new VertexEdgeListPair[adjList.size()];
         
     // }
+    
     public int minDist(int cost[],boolean visited[]) {
-    	int min = 9999999;
+    	int min = Integer.MAX_VALUE;
     	int min_index = -1;
     	for (int j = 0; j < adjList.size(); j++) {
     		if(visited[j] == false && cost[j] <= min) {
-    			min = dist[j];
+    			min = cost[j];
     			min_index = j;
     		}
     	}
@@ -314,7 +316,14 @@ class Graph {
     	
     }
     
-    /*public LinkedList dijkstrasAlgorithm(String vertx) {
+    public void printSolution(int cost[]) {
+    	System.out.println("Vertex \t\t Distance from Source");
+        for (int i = 0; i < adjList.size(); i++)
+            System.out.println(i + " \t\t " + cost[i]);
+    }
+    
+    
+    public void dijkstrasAlgorithm(String vertex) {
     	LinkedList visitedList = new LinkedList();
     	boolean[] known = new boolean[adjList.size()];
         int[] cost = new int[adjList.size()];
@@ -323,7 +332,7 @@ class Graph {
         VertexEdgeListPair[] path = new VertexEdgeListPair[adjList.size()];
         // set everything in visited array to false since no vertex has been visited yet
         for (int i = 0; i < adjList.size(); i++) {
-        	cost[i] = 9999999;
+        	cost[i] = Integer.MAX_VALUE;
             visited[i] = false;
         }
         
@@ -334,14 +343,11 @@ class Graph {
         	
         	LinkedListEdges edges = adjList.getValueAt(m).getEdges(); 
         	for (int n = 0; n < edges.size()-1; n++) {
-        		if(!(visted[n]) && ())
+        		if(!(visted[n]) && (cost[m] != Integer.MAX_VALUE) && ((cost[m] + edges.getValue(n).getWeight()) < cost[n]))
+        			cost[n] = cost[m] + edges.getValue(n).getWeight();
         	}
-        	if (!sptSet[v] && graph[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u] + graph[u][v] < dist[v])
-                dist[v] = dist[u] + graph[u][v];
-        	
-        	
         }
-        
-    }*/
+        printSolution(cost);
+    
     }
 }
