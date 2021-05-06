@@ -89,11 +89,15 @@ public class CampusRecycling {
         newGraph.addEdge("Integrated Engineering and Science Building", "College of Business", 910);
         newGraph.addEdge("Integrated Engineering and Science Building", "Nethken Hall", 320);
         newGraph.addEdge("Integrated Engineering and Science Building", "Early Childhood Education Center", 490);
+<<<<<<< HEAD
 
         LinkedList list = newGraph.dijkstrasAlgorithm("Memorial Gymnasium");
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.getValueAt(i).getVertex().getData());
         }
+=======
+        newGraph.dijkstrasAlgorithm("Nethken Hall");
+>>>>>>> b739bcca1f49ea64e1fbe7e999080b7451628eb9
     }
 }
 
@@ -417,4 +421,52 @@ class Graph {
     //     printSolution(cost);
     
     // }
+    
+    public int minDist(int cost[],boolean visited[]) {
+    	int min = Integer.MAX_VALUE;
+    	int min_index = -1;
+    	for (int j = 0; j < adjList.size(); j++) {
+    		if(visited[j] == false && cost[j] <= min) {
+    			min = cost[j];
+    			min_index = j;
+    		}
+    	}
+    	return min_index;
+    	
+    }
+    
+    public void printSolution(int cost[]) {
+    	System.out.println("Vertex \t\t Distance from Source");
+        for (int i = 0; i < adjList.size(); i++)
+            System.out.println(i + " \t\t " + cost[i]);
+    }
+    
+    
+    public void dijkstrasAlgorithm(String vertex) {
+    	LinkedList visitedList = new LinkedList();
+    	boolean[] known = new boolean[adjList.size()];
+        int[] cost = new int[adjList.size()];
+        // declare and initialize visited boolean array to represent visited vertices
+        boolean[] visited = new boolean[adjList.size()];
+        VertexEdgeListPair[] path = new VertexEdgeListPair[adjList.size()];
+        // set everything in visited array to false since no vertex has been visited yet
+        for (int i = 0; i < adjList.size(); i++) {
+        	cost[i] = Integer.MAX_VALUE;
+            visited[i] = false;
+        }
+        
+        for(int m = 0; m < adjList.size()-1; m++) {
+        	
+        	int k = minDist(cost,visited);
+        	visited[adjList.positionOf(adjList.traverseTo(vertex))] = true;
+        	
+        	LinkedListEdges edges = adjList.getValueAt(m).getEdges(); 
+        	for (int n = 0; n < edges.size()-1; n++) {
+        		if(!(visted[n]) && (cost[m] != Integer.MAX_VALUE) && ((cost[m] + edges.getValue(n).getWeight()) < cost[n]))
+        			cost[n] = cost[m] + edges.getValue(n).getWeight();
+        	}
+        }
+        printSolution(cost);
+    
+    }
 }
