@@ -89,6 +89,11 @@ public class CampusRecycling {
         newGraph.addEdge("Integrated Engineering and Science Building", "College of Business", 910);
         newGraph.addEdge("Integrated Engineering and Science Building", "Nethken Hall", 320);
         newGraph.addEdge("Integrated Engineering and Science Building", "Early Childhood Education Center", 490);
+
+        LinkedList list = newGraph.dijkstrasAlgorithm("Memorial Gymnasium");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.getValueAt(i).getVertex().getData());
+        }
     }
 }
 
@@ -294,11 +299,122 @@ class Graph {
         return visitedList;
     }
 
-    // public LinkedList dijkstrasAlgorithm(String vertex) {
-    //     LinkedList visitedList = new LinkedList();
-    //     boolean[] known = new boolean[adjList.size()];
-    //     int[] cost = new int[adjList.size()];
-    //     VertexEdgeListPair[] path = new VertexEdgeListPair[adjList.size()];
+    public LinkedList dijkstrasAlgorithm(String vertex) {
+        LinkedList shortestPath = new LinkedList();
+        boolean[] known = new boolean[adjList.size()];
+        int[] cost = new int[adjList.size()];
+        VertexEdgeListPair[] path = new VertexEdgeListPair[adjList.size()];
+        Stack[] paths = new Stack[adjList.size()];
+
+        for (int i = 0; i < adjList.size(); i++) {
+            known[i] = false;
+            cost[i] = Integer.MAX_VALUE;
+            path[i] = null;
+        }
         
+        VertexEdgeListPair curPair = adjList.traverseTo(vertex);
+        cost[adjList.positionOf(curPair)] = 0;
+        
+        while (true) {
+            int curPairIndex = adjList.positionOf(curPair);
+
+            known[curPairIndex] = true;
+    
+            LinkedListEdges edges = curPair.getEdges();
+            for (int j = 0; j < edges.size(); j++) {
+                Edge edge = edges.getValueAt(j);
+                int edgeEndPointIndex = adjList.positionOf(adjList.traverseTo(edge.getEndPoint().getData()));
+                if (cost[edgeEndPointIndex] > cost[curPairIndex] + edge.getWeight()) {
+                    cost[edgeEndPointIndex] = cost[curPairIndex] + edge.getWeight();
+                    path[edgeEndPointIndex] = curPair;
+                }
+            }
+
+            int minUnknownIndex = 0;
+            int min = Integer.MAX_VALUE;
+            boolean shortestPathFound = true;
+            for (int k = 1; k < cost.length; k++) {
+                if (cost[k] < min && cost[k] != 0 && known[k] == false) {
+                    min = cost[k];
+                    minUnknownIndex = k;
+                    shortestPathFound = false;
+                }
+            }
+            if (shortestPathFound == true) {
+                break;
+            }
+            curPair = adjList.getValueAt(minUnknownIndex);
+        }
+
+        // build stacks of paths
+        for (int i = 0; i < adjList.size(); i++) {
+            paths[i] = new Stack();
+            paths[i].push(adjList.getValueAt(i));
+
+            if (path[i] != null) {
+                paths[i].push(path[i]);
+                int j = adjList.positionOf(path[i]);
+                while (path[j] != null) {
+                    paths[i].push(path[j]);
+                    j = adjList.positionOf(path[j]);
+                }
+            } 
+        }
+        
+        // find the biggest stack with the lowest cost
+        Stack biggestStackWithLowestCost = paths[0];
+        int minCost = Integer.MAX_VALUE;
+        for (int i = 1; i < adjList.size(); i++) {
+            if (paths[i].size() == biggestStackWithLowestCost.size() && cost[i] < minCost) {
+                biggestStackWithLowestCost = paths[i];
+                minCost = cost[i];
+            }
+            if (paths[i].size() > biggestStackWithLowestCost.size()) {
+                biggestStackWithLowestCost = paths[i];
+                minCost = cost[i];
+            }
+        }
+
+        // pop everything in stack to a linked list of shortest path
+        while (!biggestStackWithLowestCost.isEmpty()) {
+            shortestPath.append(biggestStackWithLowestCost.pop());
+        }
+
+        return shortestPath;
+    }
+    
+    // public void printSolution(int cost[]) {
+    // 	System.out.println("Vertex \t\t Distance from Source");
+    //     for (int i = 0; i < adjList.size(); i++)
+    //         System.out.println(i + " \t\t " + cost[i]);
+    // }
+    
+    
+    // public void dijkstrasAlgorithm(String vertex) {
+    // 	LinkedList visitedList = new LinkedList();
+    // 	boolean[] known = new boolean[adjList.size()];
+    //     int[] cost = new int[adjList.size()];
+    //     // declare and initialize visited boolean array to represent visited vertices
+    //     boolean[] visited = new boolean[adjList.size()];
+    //     VertexEdgeListPair[] path = new VertexEdgeListPair[adjList.size()];
+    //     // set everything in visited array to false since no vertex has been visited yet
+    //     for (int i = 0; i < adjList.size(); i++) {
+    //     	cost[i] = Integer.MAX_VALUE;
+    //         visited[i] = false;
+    //     }
+        
+    //     for(int m = 0; m < adjList.size()-1; m++) {
+        	
+    //     	int k = minDist(cost,visited);
+    //     	visited[adjList.positionOf(adjList.traverseTo(vertex))] = true;
+        	
+    //     	LinkedListEdges edges = adjList.getValueAt(m).getEdges(); 
+    //     	for (int n = 0; n < edges.size()-1; n++) {
+    //     		if(!(visited[n]) && (cost[m] != Integer.MAX_VALUE) && ((cost[m] + edges.getValueAt(n).getWeight()) < cost[n]))
+    //     			cost[n] = cost[m] + edges.getValueAt(n).getWeight();
+    //     	}
+    //     }
+    //     printSolution(cost);
+    
     // }
 }

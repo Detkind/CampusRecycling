@@ -32,4 +32,8 @@ public class Stack {
     public boolean isEmpty() {
         return list.size() == 0;
     }
+
+    public int size() {
+        return list.size();
+    }
 }
