@@ -324,7 +324,7 @@ class Graph {
             for (int j = 0; j < edges.size(); j++) {
                 Edge edge = edges.getValueAt(j);
                 int edgeEndPointIndex = adjList.positionOf(adjList.traverseTo(edge.getEndPoint().getData()));
-                if (cost[edgeEndPointIndex] > cost[curPairIndex] + edge.getWeight()) {
+                if (cost[edgeEndPointIndex] > cost[curPairIndex] + edge.getWeight() && known[edgeEndPointIndex] == false) {
                     cost[edgeEndPointIndex] = cost[curPairIndex] + edge.getWeight();
                     path[edgeEndPointIndex] = curPair;
                 }
@@ -333,7 +333,7 @@ class Graph {
             int minUnknownIndex = 0;
             int min = Integer.MAX_VALUE;
             boolean shortestPathFound = true;
-            for (int k = 1; k < cost.length; k++) {
+            for (int k = 0; k < cost.length; k++) {
                 if (cost[k] < min && cost[k] != 0 && known[k] == false) {
                     min = cost[k];
                     minUnknownIndex = k;
@@ -364,7 +364,7 @@ class Graph {
         // find the biggest stack with the lowest cost
         Stack biggestStackWithLowestCost = paths[0];
         int minCost = Integer.MAX_VALUE;
-        for (int i = 1; i < adjList.size(); i++) {
+        for (int i = 0; i < adjList.size(); i++) {
             if (paths[i].size() == biggestStackWithLowestCost.size() && cost[i] < minCost) {
                 biggestStackWithLowestCost = paths[i];
                 minCost = cost[i];
