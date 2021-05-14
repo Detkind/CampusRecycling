@@ -94,7 +94,7 @@ public class CampusRecycling {
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.getValueAt(i).getVertex().getData());
         }
-        System.out.println("Cost: " + newGraph.getCost(list));
+        
     }
 }
 
@@ -107,18 +107,6 @@ class Graph {
         adjList = new LinkedList();
         directed = true;
         numV = adjList.size();
-    }
-    
-    public int getCost(LinkedList visited) {
-    	VertexEdgeListPair cur;
-    	VertexEdgeListPair next;
-    	int cost = 0;
-    	for(int i = 0; i < visited.size()-1;i++) {
-    		cur = visited.getValueAt(i);
-    		next = visited.getValueAt(i+1);
-    		cost = cost + getEdge(cur.getVertex().getData(),next.getVertex().getData()).getWeight();
-    	}
-    	return cost;
     }
     
     public int getNumV() {
@@ -231,6 +219,7 @@ class Graph {
     }
 
     public LinkedList BFS(String vertex) {
+        int cost = 0;
         // declare and initialize linked list of visited vertex edge list pairs
         LinkedList visitedList = new LinkedList();
         // declare and initialize queue
@@ -262,16 +251,19 @@ class Graph {
                 VertexEdgeListPair neighborVertexEdgeListPair = adjList.traverseTo(edgesAtCurPair.getValueAt(j).getEndPoint().getData());
                 // if neighbor hasn't been visited, enqueue neighbor to queue and set it as true in visited array
                 if (visited[adjList.positionOf(neighborVertexEdgeListPair)] == false) {
+                  cost = cost + getEdge(curPair.getVertex().getData(),neighborVertexEdgeListPair.getVertex().getData()).getWeight();
                     queue.enqueue(neighborVertexEdgeListPair);
                     visited[adjList.positionOf(neighborVertexEdgeListPair)] = true;
                 }
             }
         }
+        System.out.println("Cost: " + cost);
         // return visited list of vertex edge list pairs
         return visitedList;
     }
 
     public LinkedList DFS(String vertex) {
+        int cost = 0;
         // declare and initialize linked list of visited vertex edge list pairs
         LinkedList visitedList = new LinkedList();
         // declare and initialize stack
@@ -303,11 +295,13 @@ class Graph {
                 VertexEdgeListPair neighborVertexEdgeListPair = adjList.traverseTo(edgesAtCurPair.getValueAt(j).getEndPoint().getData());
                 // if neighbor hasn't been visited, push neighbor to stack and set it as true in visited array
                 if (visited[adjList.positionOf(neighborVertexEdgeListPair)] == false) {
+                    cost = cost + getEdge(curPair.getVertex().getData(),neighborVertexEdgeListPair.getVertex().getData()).getWeight();
                     stack.push(neighborVertexEdgeListPair);
                     visited[adjList.positionOf(neighborVertexEdgeListPair)] = true;
                 }
             }
         }
+        System.out.println("Cost: " + cost);
         // return visited list of vertex edge list pairs
         return visitedList;
     }
