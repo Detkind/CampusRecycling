@@ -99,7 +99,7 @@ public class CampusRecycling {
 }
 
 class Graph {
-    private LinkedList adjList;
+    public LinkedList adjList;
     private boolean directed;
     private int numV;
     
@@ -390,5 +390,68 @@ class Graph {
         return shortestPath;
     }
     
-    
+    public int minKey(int cost[], boolean visited[])
+    {
+        // Initialize min value
+        int min = Integer.MAX_VALUE, minindex = 0;
+  
+        for (int k = 0; k < adjList.size(); k++) {
+                if (cost[k] < min && visited[k] == false) {
+                    min = cost[k];
+                    minindex = k;
+                }
+            }
+  
+        return minindex;
+    }
+
+
+
+
+
+    public int[] PrimsAlgorithm(String vertex) {
+        int parent[] = new int[adjList.size()];
+        boolean[] known = new boolean[adjList.size()];
+        int[] cost = new int[adjList.size()];
+
+        for (int i = 0; i < adjList.size(); i++) {
+            known[i] = false;
+            cost[i] = Integer.MAX_VALUE;
+        }
+        
+        VertexEdgeListPair curPair = adjList.traverseTo(vertex);
+        cost[adjList.positionOf(curPair)] = 0;
+        parent[adjList.positionOf(curPair)] = -1;
+        //known[adjList.positionOf(curPair)] = true;
+        //System.out.println("Start cost: " + cost[adjList.positionOf(curPair)]);
+        //System.out.println("Start Parent: " + parent[adjList.positionOf(curPair)]);
+        //System.out.println("Start Known: " + known[adjList.positionOf(curPair)]);
+        for(int v = 0; v < adjList.size()-1; v++) {
+            
+            int minUnknownIndex = minKey(cost,known);
+            known[minUnknownIndex] = true;
+            curPair = adjList.getValueAt(minUnknownIndex);
+        
+        LinkedListEdges neighbors = curPair.getEdges();
+        //System.out.println("Cur: " + minUnknownIndex);
+        for (int i = 0; i < neighbors.size(); i++) {
+          
+            Vertex nextVertex = neighbors.getValueAt(i).getOpposite(curPair.getVertex());
+            int weightofEdge = getEdge(curPair.getVertex().getData(),nextVertex.getData()).getWeight();
+            //System.out.println("Weight: " + weightofEdge);
+            VertexEdgeListPair neighborPair = adjList.traverseTo(nextVertex.getData());
+            //System.out.println("neighborPair: " + adjList.positionOf(neighborPair));
+            if(weightofEdge != 0 && known[adjList.positionOf(neighborPair)] == false && weightofEdge < cost[adjList.positionOf(neighborPair)]){
+              parent[adjList.positionOf(neighborPair)] = adjList.positionOf(curPair);
+              cost[adjList.positionOf(neighborPair)] = weightofEdge;
+            }
+        }
+      }
+      System.out.println("Edge \tWeight");
+        for (int i = 0; i < adjList.size(); i++)
+            System.out.println(parent[i] + " - " + i + "\t" + cost[i]);
+      return cost;
+    }
 }
+            
+    
