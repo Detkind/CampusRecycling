@@ -121,7 +121,7 @@ public class Main {
         print3();
 
         long primsStart = System.nanoTime();
-        int[] cost = newGraph.PrimsAlgorithm(building);
+        int[] cost = newGraph.PrimsAlgorithmlong(building);
         long primsEnd = System.nanoTime();
         long primsTime = primsEnd - primsStart;
         int primstotalcost = 0;
@@ -542,13 +542,13 @@ class Graph {
         int max = 0, maxindex = 0;
   
         for (int k = 0; k < adjList.size(); k++) {
-                if (cost[k] < max && visited[k] == false) {
+                if (cost[k] > max && visited[k] == false) {
                     max = cost[k];
                     maxindex = k;
                 }
             }
   
-        return minindex;
+        return maxindex;
     }
 
 
@@ -568,10 +568,6 @@ class Graph {
         VertexEdgeListPair curPair = adjList.traverseTo(vertex);
         cost[adjList.positionOf(curPair)] = 0;
         parent[adjList.positionOf(curPair)] = -1;
-        //known[adjList.positionOf(curPair)] = true;
-        //System.out.println("Start cost: " + cost[adjList.positionOf(curPair)]);
-        //System.out.println("Start Parent: " + parent[adjList.positionOf(curPair)]);
-        //System.out.println("Start Known: " + known[adjList.positionOf(curPair)]);
         for(int v = 0; v < adjList.size()-1; v++) {
             
             int minUnknownIndex = minKey(cost,known);
@@ -579,14 +575,11 @@ class Graph {
             curPair = adjList.getValueAt(minUnknownIndex);
         
         LinkedListEdges neighbors = curPair.getEdges();
-        //System.out.println("Cur: " + minUnknownIndex);
         for (int i = 0; i < neighbors.size(); i++) {
           
             Vertex nextVertex = neighbors.getValueAt(i).getOpposite(curPair.getVertex());
             int weightofEdge = getEdge(curPair.getVertex().getData(),nextVertex.getData()).getWeight();
-            //System.out.println("Weight: " + weightofEdge);
             VertexEdgeListPair neighborPair = adjList.traverseTo(nextVertex.getData());
-            //System.out.println("neighborPair: " + adjList.positionOf(neighborPair));
             if(weightofEdge != 0 && known[adjList.positionOf(neighborPair)] == false && weightofEdge < cost[adjList.positionOf(neighborPair)]){
               parent[adjList.positionOf(neighborPair)] = adjList.positionOf(curPair);
               cost[adjList.positionOf(neighborPair)] = weightofEdge;
@@ -596,50 +589,44 @@ class Graph {
       for (int w = 0; w < adjList.size(); w++){
         for (int i = 0; i < adjList.size(); i++){
           if(parent[i] == w){
-            //System.out.println(parent[i] + " to " + i + "\t" + " -  Cost: " + cost[i]);
             System.out.println(adjList.getValueAt(parent[i]).getVertex().getData() + " to " + adjList.getValueAt(i).getVertex().getData() + "\t" + " -  Cost: " + cost[i]);
           }
         }
       }
       return cost;
     }
-    /*public int[] PrimsAlgorithmlong(String vertex) {
+
+    public int[] PrimsAlgorithmlong(String vertex) {
         int parent[] = new int[adjList.size()];
         boolean[] known = new boolean[adjList.size()];
         int[] cost = new int[adjList.size()];
 
         for (int i = 0; i < adjList.size(); i++) {
             known[i] = false;
-            cost[i] = Integer.MAX_VALUE;
+            cost[i] = 0;
         }
         
         VertexEdgeListPair curPair = adjList.traverseTo(vertex);
         cost[adjList.positionOf(curPair)] = 0;
         parent[adjList.positionOf(curPair)] = -1;
-        //known[adjList.positionOf(curPair)] = true;
-        //System.out.println("Start cost: " + cost[adjList.positionOf(curPair)]);
-        //System.out.println("Start Parent: " + parent[adjList.positionOf(curPair)]);
-        //System.out.println("Start Known: " + known[adjList.positionOf(curPair)]);
         for(int v = 0; v < adjList.size()-1; v++) {
             if(v == 0){
               curPair = adjList.getValueAt(adjList.positionOf(curPair));
+              known[adjList.positionOf(curPair)] = true;
             }
             else{
-              int maxUnkownIndex = maxKey(cost,known)
+              int maxUnkownIndex = maxKey(cost,known);
               known[maxUnkownIndex] = true;
               curPair = adjList.getValueAt(maxUnkownIndex);
             }
         
         LinkedListEdges neighbors = curPair.getEdges();
-        //System.out.println("Cur: " + minUnknownIndex);
         for (int i = 0; i < neighbors.size(); i++) {
           
             Vertex nextVertex = neighbors.getValueAt(i).getOpposite(curPair.getVertex());
             int weightofEdge = getEdge(curPair.getVertex().getData(),nextVertex.getData()).getWeight();
-            //System.out.println("Weight: " + weightofEdge);
             VertexEdgeListPair neighborPair = adjList.traverseTo(nextVertex.getData());
-            //System.out.println("neighborPair: " + adjList.positionOf(neighborPair));
-            if(weightofEdge != 0 && known[adjList.positionOf(neighborPair)] == false && weightofEdge < cost[adjList.positionOf(neighborPair)]){
+            if(weightofEdge != 0 && known[adjList.positionOf(neighborPair)] == false && weightofEdge > cost[adjList.positionOf(neighborPair)]){
               parent[adjList.positionOf(neighborPair)] = adjList.positionOf(curPair);
               cost[adjList.positionOf(neighborPair)] = weightofEdge;
             }
@@ -648,14 +635,12 @@ class Graph {
       for (int w = 0; w < adjList.size(); w++){
         for (int i = 0; i < adjList.size(); i++){
           if(parent[i] == w){
-            //System.out.println(parent[i] + " to " + i + "\t" + " -  Cost: " + cost[i]);
             System.out.println(adjList.getValueAt(parent[i]).getVertex().getData() + " to " + adjList.getValueAt(i).getVertex().getData() + "\t" + " -  Cost: " + cost[i]);
           }
         }
       }
       return cost;
-    }*/
-}
+    }
             
     
 
