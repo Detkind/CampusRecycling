@@ -1,4 +1,7 @@
-public class CampusRecycling {
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
     public static void main(String[] args) {
         Graph newGraph = new Graph();
         newGraph.addVertex("Memorial Gymnasium");
@@ -90,13 +93,139 @@ public class CampusRecycling {
         newGraph.addEdge("Integrated Engineering and Science Building", "Nethken Hall", 320);
         newGraph.addEdge("Integrated Engineering and Science Building", "Early Childhood Education Center", 490);
 
-        LinkedList list = newGraph.dijkstrasAlgorithm("Memorial Gymnasium");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.getValueAt(i).getVertex().getData());
-        }
+        Scanner myObj = new Scanner(System.in);
+        System.out.println("1. Memorial Gymnasium\n2. Hale Hall\n3. Robinson Hall \n4. Jay Taylor Visual Arts Center\n5. George T. Madison Hall\n6. Band Building\n7. Phillips Laboratory School\n8. Institute for Micromanufacturing\n9. University Hall\n10. College of Business\n11. Davison Hall\n12. Biomedical Engineering Building\n13. Engineering Annex\n14. Early Childhood Education Center\n15. Integrated Engineering and Science Building\n16. Woodard Hall\n17. Adams Classroom\n18. Carson-Taylor Hall\n19. Bogard Hall\n20. Nethken Hall\n21. Howard Center\n");
+        System.out.println("Enter a Number with the corresponding Building from the Given list.");
+        String text = myObj.nextLine();
+        String building = findBuilding(text);
         
+
+        print3();
+        //LinkedList bFSlist = newGraph.BFS(text);
+        //printLinkedList(bFSlist);
+
+        print3();
+
+        //LinkedList dFSlist = newGraph.DFS(text);
+        //printLinkedList(dFSlist);
+
+        print3();
+        System.out.println("Building: " + building);
+        long dijkstrasStart = System.nanoTime();
+        LinkedList seclist = newGraph.dijkstrasAlgorithm(building);
+        long dijkstrasEnd = System.nanoTime();
+        long dijkstrasTime = dijkstrasEnd - dijkstrasStart;
+        printLinkedList(seclist);
+        
+
+        print3();
+
+        long primsStart = System.nanoTime();
+        int[] cost = newGraph.PrimsAlgorithm(building);
+        long primsEnd = System.nanoTime();
+        long primsTime = primsEnd - primsStart;
+        int primstotalcost = 0;
+        for (int i = 0; i < newGraph.adjList.size(); i++) {
+            primstotalcost = primstotalcost + cost[i];
+        }
+        System.out.println("Total Cost: " + primstotalcost);
+
+        print3();
+
+        compareDPtime(dijkstrasTime,primsTime);
+        System.out.println();
+        compareDPcost(primstotalcost,primstotalcost);
     }
+
+    public static void compareDPcost(long dcost,long pcost){
+      if(dcost<pcost){
+        System.out.println("Dijkstra's Algorithm Traversed less feet then Prim's Algorithm.");
+      }
+      else if(dcost>pcost){
+        System.out.println("Prim's Algorithm Traversed less feet then Dijkstras Algorithm.");
+      }
+      else{
+        System.out.println("Prim's Algorithm and Dijkstras Algorithm traversed the same amount of feet.");
+      }
+    }
+    
+    public static void compareDPtime(long dtime,long ptime){
+      if(dtime<ptime){
+        System.out.println("Dijkstra's Algorithm took less time then Prim's Algorithm.");
+      }
+      else if(dtime>ptime){
+        System.out.println("Prim's Algorithm took less time then Dijkstras Algorithm.");
+      }
+      else{
+        System.out.println("Prim's Algorithm and Dijkstras Algorithm took the same amount of time.");
+      }
+    }
+
+  public static void printLinkedList(LinkedList list){
+    String printout = "Traversal Order:";
+    for(int i = 0;i<list.size();i++){
+      printout = printout +  "\n" + list.getValueAt(i).getVertex().getData();
+    }
+    
+    System.out.println(printout);
+  }
+
+
+  public static void print3(){
+    System.out.println();
+    System.out.println();
+    System.out.println();
+  }
+  public static String findBuilding(String text){
+    switch(text){
+      case "1":
+        return "Memorial Gymnasium";
+      case "2":
+        return"Hale Hall";
+      case "3":
+        return"Robinson Hall";
+      case "4":
+        return"Jay Taylor Visual Arts Center";
+      case "5":
+        return"George T. Madison Hall";
+      case "6":
+        return"Band Building";
+      case "7":
+        return"Phillips Laboratory School";
+      case "8":
+        return"Institute for Micromanufacturing";
+      case "9":
+        return"University Hall";
+      case "10":
+        return"College of Business";
+      case "11":
+        return"Davison Hall";
+      case "12":
+        return"Biomedical Engineering Building";
+      case "13":
+        return"Engineering Annex";
+      case "14":
+        return"Early Childhood Education Center";
+      case "15":
+        return"Integrated Engineering and Science Building";
+      case "16":
+        return"Woodard Hall";
+      case "17":
+        return"Adams Classroom";
+      case "18":
+        return"Carson-Taylor Hall";
+      case "19":
+        return"Bogard Hall";
+      case "20":
+        return"Nethken Hall";
+      case "21":
+        return"Howard Center";
+    }
+    return "";
+  }
 }
+
+
 
 class Graph {
     public LinkedList adjList;
@@ -257,7 +386,8 @@ class Graph {
                 }
             }
         }
-        System.out.println("Cost: " + cost);
+        System.out.println("Breadth First Search Cost: " + cost);
+        System.out.println();
         // return visited list of vertex edge list pairs
         return visitedList;
     }
@@ -301,7 +431,8 @@ class Graph {
                 }
             }
         }
-        System.out.println("Cost: " + cost);
+        System.out.println("Depth First Search Cost: " + cost);
+        System.out.println();
         // return visited list of vertex edge list pairs
         return visitedList;
     }
@@ -405,11 +536,26 @@ class Graph {
         return minindex;
     }
 
+    public int maxKey(int cost[], boolean visited[])
+    {
+        // Initialize min value
+        int max = 0, maxindex = 0;
+  
+        for (int k = 0; k < adjList.size(); k++) {
+                if (cost[k] < max && visited[k] == false) {
+                    max = cost[k];
+                    maxindex = k;
+                }
+            }
+  
+        return minindex;
+    }
 
 
 
 
-    public int[] PrimsAlgorithm(String vertex) {
+
+    public int[] PrimsAlgorithmshort(String vertex) {
         int parent[] = new int[adjList.size()];
         boolean[] known = new boolean[adjList.size()];
         int[] cost = new int[adjList.size()];
@@ -447,11 +593,71 @@ class Graph {
             }
         }
       }
-      System.out.println("Edge \tWeight");
-        for (int i = 0; i < adjList.size(); i++)
-            System.out.println(parent[i] + " - " + i + "\t" + cost[i]);
+      for (int w = 0; w < adjList.size(); w++){
+        for (int i = 0; i < adjList.size(); i++){
+          if(parent[i] == w){
+            //System.out.println(parent[i] + " to " + i + "\t" + " -  Cost: " + cost[i]);
+            System.out.println(adjList.getValueAt(parent[i]).getVertex().getData() + " to " + adjList.getValueAt(i).getVertex().getData() + "\t" + " -  Cost: " + cost[i]);
+          }
+        }
+      }
       return cost;
     }
+    /*public int[] PrimsAlgorithmlong(String vertex) {
+        int parent[] = new int[adjList.size()];
+        boolean[] known = new boolean[adjList.size()];
+        int[] cost = new int[adjList.size()];
+
+        for (int i = 0; i < adjList.size(); i++) {
+            known[i] = false;
+            cost[i] = Integer.MAX_VALUE;
+        }
+        
+        VertexEdgeListPair curPair = adjList.traverseTo(vertex);
+        cost[adjList.positionOf(curPair)] = 0;
+        parent[adjList.positionOf(curPair)] = -1;
+        //known[adjList.positionOf(curPair)] = true;
+        //System.out.println("Start cost: " + cost[adjList.positionOf(curPair)]);
+        //System.out.println("Start Parent: " + parent[adjList.positionOf(curPair)]);
+        //System.out.println("Start Known: " + known[adjList.positionOf(curPair)]);
+        for(int v = 0; v < adjList.size()-1; v++) {
+            if(v == 0){
+              curPair = adjList.getValueAt(adjList.positionOf(curPair));
+            }
+            else{
+              int maxUnkownIndex = maxKey(cost,known)
+              known[maxUnkownIndex] = true;
+              curPair = adjList.getValueAt(maxUnkownIndex);
+            }
+        
+        LinkedListEdges neighbors = curPair.getEdges();
+        //System.out.println("Cur: " + minUnknownIndex);
+        for (int i = 0; i < neighbors.size(); i++) {
+          
+            Vertex nextVertex = neighbors.getValueAt(i).getOpposite(curPair.getVertex());
+            int weightofEdge = getEdge(curPair.getVertex().getData(),nextVertex.getData()).getWeight();
+            //System.out.println("Weight: " + weightofEdge);
+            VertexEdgeListPair neighborPair = adjList.traverseTo(nextVertex.getData());
+            //System.out.println("neighborPair: " + adjList.positionOf(neighborPair));
+            if(weightofEdge != 0 && known[adjList.positionOf(neighborPair)] == false && weightofEdge < cost[adjList.positionOf(neighborPair)]){
+              parent[adjList.positionOf(neighborPair)] = adjList.positionOf(curPair);
+              cost[adjList.positionOf(neighborPair)] = weightofEdge;
+            }
+        }
+      }
+      for (int w = 0; w < adjList.size(); w++){
+        for (int i = 0; i < adjList.size(); i++){
+          if(parent[i] == w){
+            //System.out.println(parent[i] + " to " + i + "\t" + " -  Cost: " + cost[i]);
+            System.out.println(adjList.getValueAt(parent[i]).getVertex().getData() + " to " + adjList.getValueAt(i).getVertex().getData() + "\t" + " -  Cost: " + cost[i]);
+          }
+        }
+      }
+      return cost;
+    }*/
 }
+            
+    
+
             
     
