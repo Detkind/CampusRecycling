@@ -275,10 +275,10 @@ public class CampusRecycling {
 
         writer.write("\n\tWorkers want to drag out the task as long as possible without being obvious: \n");
         writer.write("\t\tBest path: \n");
-        for (int i = 0; i < primsShortPath.size(); i++) {
-            writer.write("\t\t\t" + primsShortPath.getValueAt(i).getVertex().getData() + "\n");
+        for (int i = 0; i < primsLongPath.size(); i++) {
+            writer.write("\t\t\t" + primsLongPath.getValueAt(i).getVertex().getData() + "\n");
         }
-        writer.write("\t\tTotal cost: " + campusMapGraph.primsShortTotalCost + "\n");
+        writer.write("\t\tTotal cost: " + campusMapGraph.primsLongTotalCost + "\n");
 
         writer.write("\nEfficiency (least distance): \n");
         if (campusMapGraph.dijkstrasTotalCost > campusMapGraph.primsShortTotalCost) {

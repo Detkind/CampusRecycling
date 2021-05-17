@@ -23,7 +23,7 @@ BFS:
 	Nethken Hall
 	Howard Center
 BFS total cost: 14274
-BFS time: 510500 nanoseconds
+BFS time: 428200 nanoseconds
 
 DFS:
 	Memorial Gymnasium
@@ -48,7 +48,7 @@ DFS:
 	Robinson Hall
 	Hale Hall
 DFS total cost: 13532
-DFS time: 683900 nanoseconds
+DFS time: 388600 nanoseconds
 
 Dijkstras:
 	Memorial Gymnasium
@@ -59,7 +59,7 @@ Dijkstras:
 	Bogard Hall
 	Howard Center
 Dijkstras total cost: 4070
-Dijkstras time: 294500 nanoseconds
+Dijkstras time: 156400 nanoseconds
 
 Prims minimum:
 	Memorial Gymnasium
@@ -83,7 +83,7 @@ Prims minimum:
 	Howard Center
 	Early Childhood Education Center
 Prims minimum total cost: 10564
-Prims minimum time: 153600 nanoseconds
+Prims minimum time: 134000 nanoseconds
 
 Prims maximum:
 	Memorial Gymnasium
@@ -107,7 +107,7 @@ Prims maximum:
 	Adams Classroom
 	Nethken Hall
 Prims maximum total cost: 18252
-Prims maximum time: 128800 nanoseconds
+Prims maximum time: 94800 nanoseconds
 
 Recommendations:
 	Workers want to empty bins as fast as possible: 
@@ -137,26 +137,26 @@ Recommendations:
 	Workers want to drag out the task as long as possible without being obvious: 
 		Best path: 
 			Memorial Gymnasium
-			Robinson Hall
-			Hale Hall
 			Jay Taylor Visual Arts Center
-			Band Building
-			Phillips Laboratory School
-			George T. Madison Hall
-			Davison Hall
-			Adams Classroom
 			Institute for Micromanufacturing
 			Biomedical Engineering Building
-			Woodard Hall
-			University Hall
-			Engineering Annex
-			Nethken Hall
-			Integrated Engineering and Science Building
-			Bogard Hall
+			Davison Hall
 			Carson-Taylor Hall
-			Howard Center
+			Woodard Hall
+			Hale Hall
+			George T. Madison Hall
+			University Hall
+			College of Business
+			Engineering Annex
+			Integrated Engineering and Science Building
+			Phillips Laboratory School
 			Early Childhood Education Center
-		Total cost: 10564
+			Band Building
+			Bogard Hall
+			Howard Center
+			Adams Classroom
+			Nethken Hall
+		Total cost: 18252
 
 Efficiency (least distance): 
 	Dijkstras is more efficient.
