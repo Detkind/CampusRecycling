@@ -98,7 +98,7 @@ public class LinkedList {
 	public VertexEdgeListPair traverseTo(String vertex) {
 		Node temp = head;
 		for (int i = 0; i < size(); i++) {
-			if (temp.getData().getVertex().getData() == vertex) {
+			if (temp.getData().getVertex().getData().compareTo(vertex) == 0) {
 				return temp.getData();
 			}
 			temp = temp.getNext();

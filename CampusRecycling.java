@@ -1,100 +1,193 @@
-public class CampusRecycling {
-    public static void main(String[] args) {
-        Graph newGraph = new Graph();
-        newGraph.addVertex("Memorial Gymnasium");
-        newGraph.addVertex("Hale Hall");
-        newGraph.addVertex("George T. Madison Hall");
-        newGraph.addVertex("Robinson Hall");
-        newGraph.addVertex("Woodard Hall");
-        newGraph.addVertex("Band Building");
-        newGraph.addVertex("University Hall");
-        newGraph.addVertex("Jay Taylor Visual Arts Center");
-        newGraph.addVertex("Phillips Laboratory School");
-        newGraph.addVertex("Institute for Micromanufacturing");
-        newGraph.addVertex("Biomedical Engineering Building");
-        newGraph.addVertex("Davison Hall");
-        newGraph.addVertex("Adams Classroom");
-        newGraph.addVertex("Howard Center");
-        newGraph.addVertex("Bogard Hall");
-        newGraph.addVertex("College of Business");
-        newGraph.addVertex("Carson-Taylor Hall");
-        newGraph.addVertex("Engineering Annex");
-        newGraph.addVertex("Nethken Hall");
-        newGraph.addVertex("Early Childhood Education Center");
-        newGraph.addVertex("Integrated Engineering and Science Building");
-        // edges from Memorial Gymnasium
-        newGraph.addEdge("Memorial Gymnasium", "Hale Hall", 370);
-        newGraph.addEdge("Memorial Gymnasium", "Robinson Hall", 250);
-        newGraph.addEdge("Memorial Gymnasium", "Jay Taylor Visual Arts Center", 508);
-        // edges from Hale Hall
-        newGraph.addEdge("Hale Hall", "Memorial Gymnasium", 370);
-        newGraph.addEdge("Hale Hall", "George T. Madison Hall", 550);
-        // edges from George T. Madison Hall
-        newGraph.addEdge("George T. Madison Hall", "Hale Hall", 550);
-        newGraph.addEdge("George T. Madison Hall", "University Hall", 1500);
-        newGraph.addEdge("George T. Madison Hall", "College of Business", 1500);
-        // edges from Robinson Hall
-        newGraph.addEdge("Robinson Hall", "Memorial Gymnasium", 250);
-        // edges from Woodard Hall
-        newGraph.addEdge("Woodard Hall", "Hale Hall", 1380);
-        newGraph.addEdge("Woodard Hall", "George T. Madison Hall", 1140);
-        // edges from Band Building
-        newGraph.addEdge("Band Building", "Memorial Gymnasium", 710);
-        newGraph.addEdge("Band Building", "Jay Taylor Visual Arts Center", 430);
-        // edges from University Hall
-        newGraph.addEdge("University Hall", "College of Business", 1200);
-        newGraph.addEdge("University Hall", "Engineering Annex", 920);
-        // edges from Jay Taylor Visual Arts Center
-        newGraph.addEdge("Jay Taylor Visual Arts Center", "Memorial Gymnasium", 508);
-        newGraph.addEdge("Jay Taylor Visual Arts Center", "Band Building", 430);
-        newGraph.addEdge("Jay Taylor Visual Arts Center", "Phillips Laboratory School", 521);
-        newGraph.addEdge("Jay Taylor Visual Arts Center", "Institute for Micromanufacturing", 1200);
-        // edges from Phillips Laboratory School
-        newGraph.addEdge("Phillips Laboratory School", "Institute for Micromanufacturing", 980);
-        newGraph.addEdge("Phillips Laboratory School", "Davison Hall", 715);
-        // edges from Institute for Micromanufacturing
-        newGraph.addEdge("Institute for Micromanufacturing", "Jay Taylor Visual Arts Center", 1200);
-        newGraph.addEdge("Institute for Micromanufacturing", "Biomedical Engineering Building", 550);
-        // edges from Biomedical Engineering Building
-        newGraph.addEdge("Biomedical Engineering Building", "Davison Hall", 1753);
-        // edges from Davison Hall
-        newGraph.addEdge("Davison Hall", "Woodard Hall", 1070);
-        newGraph.addEdge("Davison Hall", "Biomedical Engineering Building", 1753);
-        newGraph.addEdge("Davison Hall", "Adams Classroom", 200);
-        newGraph.addEdge("Davison Hall", "Carson-Taylor Hall", 1650);
-        // edges from Adams Classroom
-        newGraph.addEdge("Adams Classroom", "Davison Hall", 200);
-        // edges from Howard Center
-        newGraph.addEdge("Howard Center", "Davison Hall", 1850);
-        newGraph.addEdge("Howard Center", "Adams Classroom", 1680);
-        newGraph.addEdge("Howard Center", "Engineering Annex", 450);
-        // edges from Bogard Hall
-        newGraph.addEdge("Bogard Hall", "Howard Center", 350);
-        newGraph.addEdge("Bogard Hall", "Carson-Taylor Hall", 250);
-        // edges from College of Business
-        newGraph.addEdge("College of Business", "George T. Madison Hall", 1500);
-        newGraph.addEdge("College of Business", "University Hall", 420);
-        newGraph.addEdge("College of Business", "Early Childhood Education Center", 490);
-        newGraph.addEdge("College of Business", "Integrated Engineering and Science Building", 910);
-        // edges from Carson-Taylor Hall
-        newGraph.addEdge("Carson-Taylor Hall", "Engineering Annex", 450);
-        // edges from Engineering Annex
-        newGraph.addEdge("Engineering Annex", "Bogard Hall", 380);
-        newGraph.addEdge("Engineering Annex", "Nethken Hall", 210);
-        // edges from Nethken Hall
-        newGraph.addEdge("Nethken Hall", "Integrated Engineering and Science Building", 320);
-        // edges from Early Childhood Education Center
-        newGraph.addEdge("Early Childhood Education Center", "Integrated Engineering and Science Building", 1160);
-        // edges from Integrated Engineering and Science Building
-        newGraph.addEdge("Integrated Engineering and Science Building", "College of Business", 910);
-        newGraph.addEdge("Integrated Engineering and Science Building", "Nethken Hall", 320);
-        newGraph.addEdge("Integrated Engineering and Science Building", "Early Childhood Education Center", 490);
+import java.io.*;
+import java.util.Scanner;
 
-        LinkedList list = newGraph.dijkstrasAlgorithm("Memorial Gymnasium");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.getValueAt(i).getVertex().getData());
-        }
+public class CampusRecycling {
+    public static void main(String[] args) throws Exception {
+        String[] buildings = new String[21];
+        buildings[0] = "Memorial Gymnasium";
+        buildings[1] = "Hale Hall";
+        buildings[2] = "George T. Madison Hall";
+        buildings[3] = "Robinson Hall";
+        buildings[4] = "Woodard Hall";
+        buildings[5] = "Band Building";
+        buildings[6] = "University Hall";
+        buildings[7] = "Jay Taylor Visual Arts Center";
+        buildings[8] = "Phillips Laboratory School";
+        buildings[9] = "Institute for Micromanufacturing";
+        buildings[10] = "Biomedical Engineering Building";
+        buildings[11] = "Davison Hall";
+        buildings[12] = "Adams Classroom";
+        buildings[13] = "Howard Center";
+        buildings[14] = "Bogard Hall";
+        buildings[15] = "College of Business";
+        buildings[16] = "Carson-Taylor Hall";
+        buildings[17] = "Engineering Annex";
+        buildings[18] = "Nethken Hall";
+        buildings[19] = "Early Childhood Education Center";
+        buildings[20] = "Integrated Engineering and Science Building";
         
+        Graph campusMapGraph = new Graph();
+        campusMapGraph.addVertex("Memorial Gymnasium");
+        campusMapGraph.addVertex("Hale Hall");
+        campusMapGraph.addVertex("George T. Madison Hall");
+        campusMapGraph.addVertex("Robinson Hall");
+        campusMapGraph.addVertex("Woodard Hall");
+        campusMapGraph.addVertex("Band Building");
+        campusMapGraph.addVertex("University Hall");
+        campusMapGraph.addVertex("Jay Taylor Visual Arts Center");
+        campusMapGraph.addVertex("Phillips Laboratory School");
+        campusMapGraph.addVertex("Institute for Micromanufacturing");
+        campusMapGraph.addVertex("Biomedical Engineering Building");
+        campusMapGraph.addVertex("Davison Hall");
+        campusMapGraph.addVertex("Adams Classroom");
+        campusMapGraph.addVertex("Howard Center");
+        campusMapGraph.addVertex("Bogard Hall");
+        campusMapGraph.addVertex("College of Business");
+        campusMapGraph.addVertex("Carson-Taylor Hall");
+        campusMapGraph.addVertex("Engineering Annex");
+        campusMapGraph.addVertex("Nethken Hall");
+        campusMapGraph.addVertex("Early Childhood Education Center");
+        campusMapGraph.addVertex("Integrated Engineering and Science Building");
+        // edges from Memorial Gymnasium
+        campusMapGraph.addEdge("Memorial Gymnasium", "Hale Hall", 370);
+        campusMapGraph.addEdge("Memorial Gymnasium", "Robinson Hall", 250);
+        campusMapGraph.addEdge("Memorial Gymnasium", "Jay Taylor Visual Arts Center", 508);
+        // edges from Hale Hall
+        campusMapGraph.addEdge("Hale Hall", "Memorial Gymnasium", 370);
+        campusMapGraph.addEdge("Hale Hall", "George T. Madison Hall", 550);
+        // edges from George T. Madison Hall
+        campusMapGraph.addEdge("George T. Madison Hall", "Hale Hall", 550);
+        campusMapGraph.addEdge("George T. Madison Hall", "University Hall", 1500);
+        campusMapGraph.addEdge("George T. Madison Hall", "College of Business", 1500);
+        // edges from Robinson Hall
+        campusMapGraph.addEdge("Robinson Hall", "Memorial Gymnasium", 250);
+        // edges from Woodard Hall
+        campusMapGraph.addEdge("Woodard Hall", "Hale Hall", 1380);
+        campusMapGraph.addEdge("Woodard Hall", "George T. Madison Hall", 1140);
+        // edges from Band Building
+        campusMapGraph.addEdge("Band Building", "Memorial Gymnasium", 710);
+        campusMapGraph.addEdge("Band Building", "Jay Taylor Visual Arts Center", 430);
+        // edges from University Hall
+        campusMapGraph.addEdge("University Hall", "College of Business", 1200);
+        campusMapGraph.addEdge("University Hall", "Engineering Annex", 920);
+        // edges from Jay Taylor Visual Arts Center
+        campusMapGraph.addEdge("Jay Taylor Visual Arts Center", "Memorial Gymnasium", 508);
+        campusMapGraph.addEdge("Jay Taylor Visual Arts Center", "Band Building", 430);
+        campusMapGraph.addEdge("Jay Taylor Visual Arts Center", "Phillips Laboratory School", 521);
+        campusMapGraph.addEdge("Jay Taylor Visual Arts Center", "Institute for Micromanufacturing", 1200);
+        // edges from Phillips Laboratory School
+        campusMapGraph.addEdge("Phillips Laboratory School", "Institute for Micromanufacturing", 980);
+        campusMapGraph.addEdge("Phillips Laboratory School", "Davison Hall", 715);
+        // edges from Institute for Micromanufacturing
+        campusMapGraph.addEdge("Institute for Micromanufacturing", "Jay Taylor Visual Arts Center", 1200);
+        campusMapGraph.addEdge("Institute for Micromanufacturing", "Biomedical Engineering Building", 550);
+        // edges from Biomedical Engineering Building
+        campusMapGraph.addEdge("Biomedical Engineering Building", "Davison Hall", 1753);
+        // edges from Davison Hall
+        campusMapGraph.addEdge("Davison Hall", "Woodard Hall", 1070);
+        campusMapGraph.addEdge("Davison Hall", "Biomedical Engineering Building", 1753);
+        campusMapGraph.addEdge("Davison Hall", "Adams Classroom", 200);
+        campusMapGraph.addEdge("Davison Hall", "Carson-Taylor Hall", 1650);
+        // edges from Adams Classroom
+        campusMapGraph.addEdge("Adams Classroom", "Davison Hall", 200);
+        // edges from Howard Center
+        campusMapGraph.addEdge("Howard Center", "Davison Hall", 1850);
+        campusMapGraph.addEdge("Howard Center", "Adams Classroom", 1680);
+        campusMapGraph.addEdge("Howard Center", "Engineering Annex", 450);
+        // edges from Bogard Hall
+        campusMapGraph.addEdge("Bogard Hall", "Howard Center", 350);
+        campusMapGraph.addEdge("Bogard Hall", "Carson-Taylor Hall", 250);
+        // edges from College of Business
+        campusMapGraph.addEdge("College of Business", "George T. Madison Hall", 1500);
+        campusMapGraph.addEdge("College of Business", "University Hall", 420);
+        campusMapGraph.addEdge("College of Business", "Early Childhood Education Center", 490);
+        campusMapGraph.addEdge("College of Business", "Integrated Engineering and Science Building", 910);
+        // edges from Carson-Taylor Hall
+        campusMapGraph.addEdge("Carson-Taylor Hall", "Engineering Annex", 450);
+        // edges from Engineering Annex
+        campusMapGraph.addEdge("Engineering Annex", "Bogard Hall", 380);
+        campusMapGraph.addEdge("Engineering Annex", "Nethken Hall", 210);
+        // edges from Nethken Hall
+        campusMapGraph.addEdge("Nethken Hall", "Integrated Engineering and Science Building", 320);
+        // edges from Early Childhood Education Center
+        campusMapGraph.addEdge("Early Childhood Education Center", "Integrated Engineering and Science Building", 1160);
+        // edges from Integrated Engineering and Science Building
+        campusMapGraph.addEdge("Integrated Engineering and Science Building", "College of Business", 910);
+        campusMapGraph.addEdge("Integrated Engineering and Science Building", "Nethken Hall", 320);
+        campusMapGraph.addEdge("Integrated Engineering and Science Building", "Early Childhood Education Center", 490);
+
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        while (true) {
+            System.out.print("\nWhich building do you want to start with? (Type 'list' for a list of buildings) ");
+            input = scanner.nextLine();
+            if (input.compareTo("list") == 0) {
+                for (int i = 0; i < buildings.length; i++) {
+                    System.out.println(buildings[i]);
+                }
+            }
+            if (input.compareTo("list") != 0) {
+                break;
+            }
+        }
+        // create output file
+        File outputFile = new File("output.txt");
+        outputFile.createNewFile();
+        FileWriter writer = new FileWriter(outputFile);
+
+        writer.write("User input: " + input + "\n");
+
+        long startTimeBFS;
+        long endTimeBFS;
+        long totalTimeBFS;
+
+        long startTimeDFS;
+        long endTimeDFS;
+        long totalTimeDFS;
+
+        long startTimeDijkstras;
+        long endTimeDijkstras;
+        long totalTimeDijkstras;
+
+        startTimeBFS = System.nanoTime();
+        LinkedList BFSPath = campusMapGraph.BFS(input);
+        endTimeBFS = System.nanoTime();
+        totalTimeBFS = endTimeBFS - startTimeBFS;
+
+        startTimeDFS = System.nanoTime();
+        LinkedList DFSPath = campusMapGraph.DFS(input);
+        endTimeDFS = System.nanoTime();
+        totalTimeDFS = endTimeDFS - startTimeDFS;
+
+        startTimeDijkstras = System.nanoTime();
+        LinkedList dijkstrasPath = campusMapGraph.dijkstrasAlgorithm(input);
+        endTimeDijkstras = System.nanoTime();
+        totalTimeDijkstras = endTimeDijkstras - startTimeDijkstras;
+        
+        writer.write("\nBFS:\n");
+        for (int i = 0; i < BFSPath.size(); i++) {
+            writer.write("\t" + BFSPath.getValueAt(i).getVertex().getData() + "\n");
+        }
+        writer.write("BFS total cost: " + campusMapGraph.BFSTotalCost + "\n");
+
+        writer.write("\nDFS:\n");
+        for (int i = 0; i < DFSPath.size(); i++) {
+            writer.write("\t" + DFSPath.getValueAt(i).getVertex().getData() + "\n");
+        }
+        writer.write("DFS total cost: " + campusMapGraph.DFSTotalCost + "\n");
+
+        writer.write("\nDijkstras:\n");
+        for (int i = 0; i < dijkstrasPath.size(); i++) {
+            writer.write("\t" + dijkstrasPath.getValueAt(i).getVertex().getData() + "\n");
+        }
+        writer.write("Dijkstras total cost: " + campusMapGraph.dijkstrasTotalCost + "\n");
+
+        writer.write("\nRecommendations:\n");
+        writer.write("\tWorkers want to empty bins as fast as possible: ");
+        
+        writer.write("\tWorkers want to drag out the task as long as possible without being obvious: ");
+
+        writer.close();
     }
 }
 
@@ -102,6 +195,10 @@ class Graph {
     public LinkedList adjList;
     private boolean directed;
     private int numV;
+
+    public int BFSTotalCost;
+    public int DFSTotalCost;
+    public int dijkstrasTotalCost;
     
     public Graph() {
         adjList = new LinkedList();
@@ -219,7 +316,7 @@ class Graph {
     }
 
     public LinkedList BFS(String vertex) {
-        int cost = 0;
+        BFSTotalCost = 0;
         // declare and initialize linked list of visited vertex edge list pairs
         LinkedList visitedList = new LinkedList();
         // declare and initialize queue
@@ -251,19 +348,18 @@ class Graph {
                 VertexEdgeListPair neighborVertexEdgeListPair = adjList.traverseTo(edgesAtCurPair.getValueAt(j).getEndPoint().getData());
                 // if neighbor hasn't been visited, enqueue neighbor to queue and set it as true in visited array
                 if (visited[adjList.positionOf(neighborVertexEdgeListPair)] == false) {
-                  cost = cost + getEdge(curPair.getVertex().getData(),neighborVertexEdgeListPair.getVertex().getData()).getWeight();
+                    BFSTotalCost += getEdge(curPair.getVertex().getData(),neighborVertexEdgeListPair.getVertex().getData()).getWeight();
                     queue.enqueue(neighborVertexEdgeListPair);
                     visited[adjList.positionOf(neighborVertexEdgeListPair)] = true;
                 }
             }
         }
-        System.out.println("Cost: " + cost);
         // return visited list of vertex edge list pairs
         return visitedList;
     }
 
     public LinkedList DFS(String vertex) {
-        int cost = 0;
+        DFSTotalCost = 0;
         // declare and initialize linked list of visited vertex edge list pairs
         LinkedList visitedList = new LinkedList();
         // declare and initialize stack
@@ -295,13 +391,12 @@ class Graph {
                 VertexEdgeListPair neighborVertexEdgeListPair = adjList.traverseTo(edgesAtCurPair.getValueAt(j).getEndPoint().getData());
                 // if neighbor hasn't been visited, push neighbor to stack and set it as true in visited array
                 if (visited[adjList.positionOf(neighborVertexEdgeListPair)] == false) {
-                    cost = cost + getEdge(curPair.getVertex().getData(),neighborVertexEdgeListPair.getVertex().getData()).getWeight();
+                    DFSTotalCost += getEdge(curPair.getVertex().getData(),neighborVertexEdgeListPair.getVertex().getData()).getWeight();
                     stack.push(neighborVertexEdgeListPair);
                     visited[adjList.positionOf(neighborVertexEdgeListPair)] = true;
                 }
             }
         }
-        System.out.println("Cost: " + cost);
         // return visited list of vertex edge list pairs
         return visitedList;
     }
@@ -382,6 +477,8 @@ class Graph {
             }
         }
 
+        dijkstrasTotalCost = minCost;
+        
         // pop everything in stack to a linked list of shortest path
         while (!biggestStackWithLowestCost.isEmpty()) {
             shortestPath.append(biggestStackWithLowestCost.pop());
@@ -432,25 +529,25 @@ class Graph {
             known[minUnknownIndex] = true;
             curPair = adjList.getValueAt(minUnknownIndex);
         
-        LinkedListEdges neighbors = curPair.getEdges();
-        //System.out.println("Cur: " + minUnknownIndex);
-        for (int i = 0; i < neighbors.size(); i++) {
-          
-            Vertex nextVertex = neighbors.getValueAt(i).getOpposite(curPair.getVertex());
-            int weightofEdge = getEdge(curPair.getVertex().getData(),nextVertex.getData()).getWeight();
-            //System.out.println("Weight: " + weightofEdge);
-            VertexEdgeListPair neighborPair = adjList.traverseTo(nextVertex.getData());
-            //System.out.println("neighborPair: " + adjList.positionOf(neighborPair));
-            if(weightofEdge != 0 && known[adjList.positionOf(neighborPair)] == false && weightofEdge < cost[adjList.positionOf(neighborPair)]){
-              parent[adjList.positionOf(neighborPair)] = adjList.positionOf(curPair);
-              cost[adjList.positionOf(neighborPair)] = weightofEdge;
+            LinkedListEdges neighbors = curPair.getEdges();
+            //System.out.println("Cur: " + minUnknownIndex);
+            for (int i = 0; i < neighbors.size(); i++) {
+            
+                Vertex nextVertex = neighbors.getValueAt(i).getOpposite(curPair.getVertex());
+                int weightofEdge = getEdge(curPair.getVertex().getData(),nextVertex.getData()).getWeight();
+                //System.out.println("Weight: " + weightofEdge);
+                VertexEdgeListPair neighborPair = adjList.traverseTo(nextVertex.getData());
+                //System.out.println("neighborPair: " + adjList.positionOf(neighborPair));
+                if(weightofEdge != 0 && known[adjList.positionOf(neighborPair)] == false && weightofEdge < cost[adjList.positionOf(neighborPair)]){
+                    parent[adjList.positionOf(neighborPair)] = adjList.positionOf(curPair);
+                    cost[adjList.positionOf(neighborPair)] = weightofEdge;
+                }
             }
-        }
-      }
-      System.out.println("Edge \tWeight");
+        } 
+        System.out.println("Edge \tWeight");
         for (int i = 0; i < adjList.size(); i++)
             System.out.println(parent[i] + " - " + i + "\t" + cost[i]);
-      return cost;
+        return cost;
     }
 }
             

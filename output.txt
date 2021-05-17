@@ -1,0 +1,61 @@
+User input: Hale Hall
+
+BFS:
+	Hale Hall
+	Memorial Gymnasium
+	George T. Madison Hall
+	Robinson Hall
+	Jay Taylor Visual Arts Center
+	University Hall
+	College of Business
+	Band Building
+	Phillips Laboratory School
+	Institute for Micromanufacturing
+	Engineering Annex
+	Early Childhood Education Center
+	Integrated Engineering and Science Building
+	Davison Hall
+	Biomedical Engineering Building
+	Bogard Hall
+	Nethken Hall
+	Woodard Hall
+	Adams Classroom
+	Carson-Taylor Hall
+	Howard Center
+BFS total cost: 14274
+
+DFS:
+	Hale Hall
+	George T. Madison Hall
+	College of Business
+	Integrated Engineering and Science Building
+	Nethken Hall
+	Early Childhood Education Center
+	University Hall
+	Engineering Annex
+	Bogard Hall
+	Carson-Taylor Hall
+	Howard Center
+	Adams Classroom
+	Davison Hall
+	Biomedical Engineering Building
+	Woodard Hall
+	Memorial Gymnasium
+	Jay Taylor Visual Arts Center
+	Institute for Micromanufacturing
+	Phillips Laboratory School
+	Band Building
+	Robinson Hall
+DFS total cost: 16802
+
+Dijkstras:
+	Hale Hall
+	Memorial Gymnasium
+	Jay Taylor Visual Arts Center
+	Phillips Laboratory School
+	Davison Hall
+	Adams Classroom
+Dijkstras total cost: 2314
+
+Recommendations:
+	Workers want to empty bins as fast as possible: 	Workers want to drag out the task as long as possible without being obvious: 
