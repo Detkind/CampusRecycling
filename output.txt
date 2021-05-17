@@ -23,7 +23,7 @@ BFS:
 	Nethken Hall
 	Howard Center
 BFS total cost: 14274
-BFS time: 421000 nanoseconds
+BFS time: 510500 nanoseconds
 
 DFS:
 	Memorial Gymnasium
@@ -48,7 +48,7 @@ DFS:
 	Robinson Hall
 	Hale Hall
 DFS total cost: 13532
-DFS time: 454400 nanoseconds
+DFS time: 683900 nanoseconds
 
 Dijkstras:
 	Memorial Gymnasium
@@ -59,7 +59,7 @@ Dijkstras:
 	Bogard Hall
 	Howard Center
 Dijkstras total cost: 4070
-Dijkstras time: 216200 nanoseconds
+Dijkstras time: 294500 nanoseconds
 
 Prims minimum:
 	Memorial Gymnasium
@@ -83,7 +83,7 @@ Prims minimum:
 	Howard Center
 	Early Childhood Education Center
 Prims minimum total cost: 10564
-Prims minimum time: 90800 nanoseconds
+Prims minimum time: 153600 nanoseconds
 
 Prims maximum:
 	Memorial Gymnasium
@@ -107,7 +107,7 @@ Prims maximum:
 	Adams Classroom
 	Nethken Hall
 Prims maximum total cost: 18252
-Prims maximum time: 82300 nanoseconds
+Prims maximum time: 128800 nanoseconds
 
 Recommendations:
 	Workers want to empty bins as fast as possible: 
