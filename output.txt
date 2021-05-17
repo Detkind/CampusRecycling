@@ -1,61 +1,165 @@
-User input: Hale Hall
+User input: Memorial Gymnasium
 
 BFS:
-	Hale Hall
 	Memorial Gymnasium
-	George T. Madison Hall
+	Hale Hall
 	Robinson Hall
 	Jay Taylor Visual Arts Center
-	University Hall
-	College of Business
+	George T. Madison Hall
 	Band Building
 	Phillips Laboratory School
 	Institute for Micromanufacturing
+	University Hall
+	College of Business
+	Davison Hall
+	Biomedical Engineering Building
 	Engineering Annex
 	Early Childhood Education Center
 	Integrated Engineering and Science Building
-	Davison Hall
-	Biomedical Engineering Building
-	Bogard Hall
-	Nethken Hall
 	Woodard Hall
 	Adams Classroom
 	Carson-Taylor Hall
+	Bogard Hall
+	Nethken Hall
 	Howard Center
 BFS total cost: 14274
+BFS time: 421000 nanoseconds
 
 DFS:
-	Hale Hall
-	George T. Madison Hall
-	College of Business
-	Integrated Engineering and Science Building
-	Nethken Hall
-	Early Childhood Education Center
-	University Hall
-	Engineering Annex
-	Bogard Hall
-	Carson-Taylor Hall
-	Howard Center
-	Adams Classroom
-	Davison Hall
-	Biomedical Engineering Building
-	Woodard Hall
 	Memorial Gymnasium
 	Jay Taylor Visual Arts Center
 	Institute for Micromanufacturing
+	Biomedical Engineering Building
+	Davison Hall
+	Carson-Taylor Hall
+	Engineering Annex
+	Nethken Hall
+	Integrated Engineering and Science Building
+	Early Childhood Education Center
+	College of Business
+	University Hall
+	George T. Madison Hall
+	Bogard Hall
+	Howard Center
+	Adams Classroom
+	Woodard Hall
 	Phillips Laboratory School
 	Band Building
 	Robinson Hall
-DFS total cost: 16802
+	Hale Hall
+DFS total cost: 13532
+DFS time: 454400 nanoseconds
 
 Dijkstras:
-	Hale Hall
 	Memorial Gymnasium
+	Hale Hall
+	George T. Madison Hall
+	University Hall
+	Engineering Annex
+	Bogard Hall
+	Howard Center
+Dijkstras total cost: 4070
+Dijkstras time: 216200 nanoseconds
+
+Prims minimum:
+	Memorial Gymnasium
+	Robinson Hall
+	Hale Hall
 	Jay Taylor Visual Arts Center
+	Band Building
 	Phillips Laboratory School
+	George T. Madison Hall
 	Davison Hall
 	Adams Classroom
-Dijkstras total cost: 2314
+	Institute for Micromanufacturing
+	Biomedical Engineering Building
+	Woodard Hall
+	University Hall
+	Engineering Annex
+	Nethken Hall
+	Integrated Engineering and Science Building
+	Bogard Hall
+	Carson-Taylor Hall
+	Howard Center
+	Early Childhood Education Center
+Prims minimum total cost: 10564
+Prims minimum time: 90800 nanoseconds
+
+Prims maximum:
+	Memorial Gymnasium
+	Jay Taylor Visual Arts Center
+	Institute for Micromanufacturing
+	Biomedical Engineering Building
+	Davison Hall
+	Carson-Taylor Hall
+	Woodard Hall
+	Hale Hall
+	George T. Madison Hall
+	University Hall
+	College of Business
+	Engineering Annex
+	Integrated Engineering and Science Building
+	Phillips Laboratory School
+	Early Childhood Education Center
+	Band Building
+	Bogard Hall
+	Howard Center
+	Adams Classroom
+	Nethken Hall
+Prims maximum total cost: 18252
+Prims maximum time: 82300 nanoseconds
 
 Recommendations:
-	Workers want to empty bins as fast as possible: 	Workers want to drag out the task as long as possible without being obvious: 
+	Workers want to empty bins as fast as possible: 
+		Fastest path (Prims maximum): 
+			Memorial Gymnasium
+			Jay Taylor Visual Arts Center
+			Institute for Micromanufacturing
+			Biomedical Engineering Building
+			Davison Hall
+			Carson-Taylor Hall
+			Woodard Hall
+			Hale Hall
+			George T. Madison Hall
+			University Hall
+			College of Business
+			Engineering Annex
+			Integrated Engineering and Science Building
+			Phillips Laboratory School
+			Early Childhood Education Center
+			Band Building
+			Bogard Hall
+			Howard Center
+			Adams Classroom
+			Nethken Hall
+		Total cost: 18252
+
+	Workers want to drag out the task as long as possible without being obvious: 
+		Best path: 
+			Memorial Gymnasium
+			Robinson Hall
+			Hale Hall
+			Jay Taylor Visual Arts Center
+			Band Building
+			Phillips Laboratory School
+			George T. Madison Hall
+			Davison Hall
+			Adams Classroom
+			Institute for Micromanufacturing
+			Biomedical Engineering Building
+			Woodard Hall
+			University Hall
+			Engineering Annex
+			Nethken Hall
+			Integrated Engineering and Science Building
+			Bogard Hall
+			Carson-Taylor Hall
+			Howard Center
+			Early Childhood Education Center
+		Total cost: 10564
+
+Efficiency (least distance): 
+	Dijkstras is more efficient.
+
+Efficiency (time analysis): 
+	Prims minimum is more efficient.

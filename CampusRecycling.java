@@ -127,7 +127,17 @@ public class CampusRecycling {
                 }
             }
             if (input.compareTo("list") != 0) {
-                break;
+                boolean inputIsCorrect = false;
+                for (int i = 0; i < buildings.length; i++) {
+                    if (buildings[i].compareTo(input) == 0) {
+                        inputIsCorrect = true;
+                        break;
+                    }
+                }
+                if (inputIsCorrect == true) {
+                    break;
+                }
+                System.out.println("\nInput incorrect. Please select a building from 'list'.");
             }
         }
         // create output file
@@ -149,6 +159,14 @@ public class CampusRecycling {
         long endTimeDijkstras;
         long totalTimeDijkstras;
 
+        long startTimePrimsShort;
+        long endTimePrimsShort;
+        long totalTimePrimsShort;
+        
+        long startTimePrimsLong;
+        long endTimePrimsLong;
+        long totalTimePrimsLong;
+
         startTimeBFS = System.nanoTime();
         LinkedList BFSPath = campusMapGraph.BFS(input);
         endTimeBFS = System.nanoTime();
@@ -163,29 +181,120 @@ public class CampusRecycling {
         LinkedList dijkstrasPath = campusMapGraph.dijkstrasAlgorithm(input);
         endTimeDijkstras = System.nanoTime();
         totalTimeDijkstras = endTimeDijkstras - startTimeDijkstras;
+
+        startTimePrimsShort = System.nanoTime();
+        LinkedList primsShortPath = campusMapGraph.PrimsAlgorithmshort(input);
+        endTimePrimsShort = System.nanoTime();
+        totalTimePrimsShort = endTimePrimsShort - startTimePrimsShort;
         
+        startTimePrimsLong = System.nanoTime();
+        LinkedList primsLongPath = campusMapGraph.PrimsAlgorithmlong(input);
+        endTimePrimsLong = System.nanoTime();
+        totalTimePrimsLong = endTimePrimsLong - startTimePrimsLong;
+
+        long fastestTime = Math.min(Math.min(totalTimeBFS, totalTimeDFS), Math.min(totalTimeDijkstras, Math.min(totalTimePrimsShort, totalTimePrimsLong)));
+        // long fastestTime = Math.min(totalTimeBFS, Math.min(totalTimeDijkstras, totalTimeDFS));
+
+        // BFS
         writer.write("\nBFS:\n");
         for (int i = 0; i < BFSPath.size(); i++) {
             writer.write("\t" + BFSPath.getValueAt(i).getVertex().getData() + "\n");
         }
         writer.write("BFS total cost: " + campusMapGraph.BFSTotalCost + "\n");
+        writer.write("BFS time: " + totalTimeBFS + " nanoseconds\n");
 
+        // DFS
         writer.write("\nDFS:\n");
         for (int i = 0; i < DFSPath.size(); i++) {
             writer.write("\t" + DFSPath.getValueAt(i).getVertex().getData() + "\n");
         }
         writer.write("DFS total cost: " + campusMapGraph.DFSTotalCost + "\n");
+        writer.write("DFS time: " + totalTimeDFS + " nanoseconds\n");
 
+        // Dijkstras
         writer.write("\nDijkstras:\n");
         for (int i = 0; i < dijkstrasPath.size(); i++) {
             writer.write("\t" + dijkstrasPath.getValueAt(i).getVertex().getData() + "\n");
         }
         writer.write("Dijkstras total cost: " + campusMapGraph.dijkstrasTotalCost + "\n");
+        writer.write("Dijkstras time: " + totalTimeDijkstras + " nanoseconds\n");
+
+        // Prims minimum
+        writer.write("\nPrims minimum:\n");
+        for (int i = 0; i < primsShortPath.size(); i++) {
+            writer.write("\t" + primsShortPath.getValueAt(i).getVertex().getData() + "\n");
+        }
+        writer.write("Prims minimum total cost: " + campusMapGraph.primsShortTotalCost + "\n");
+        writer.write("Prims minimum time: " + totalTimePrimsShort + " nanoseconds\n");
+
+        // Prims maximum
+        writer.write("\nPrims maximum:\n");
+        for (int i = 0; i < primsLongPath.size(); i++) {
+            writer.write("\t" + primsLongPath.getValueAt(i).getVertex().getData() + "\n");
+        }
+        writer.write("Prims maximum total cost: " + campusMapGraph.primsLongTotalCost + "\n");
+        writer.write("Prims maximum time: " + totalTimePrimsLong + " nanoseconds\n");
 
         writer.write("\nRecommendations:\n");
-        writer.write("\tWorkers want to empty bins as fast as possible: ");
-        
-        writer.write("\tWorkers want to drag out the task as long as possible without being obvious: ");
+        writer.write("\tWorkers want to empty bins as fast as possible: \n");
+        if (fastestTime == totalTimeBFS) {
+            writer.write("\t\tFastest path (BFS): \n");
+            for (int i = 0; i < BFSPath.size(); i++) {
+                writer.write("\t\t\t" + BFSPath.getValueAt(i).getVertex().getData() + "\n");
+            }
+            writer.write("\t\tTotal cost: " + campusMapGraph.BFSTotalCost + "\n");
+        }
+        if (fastestTime == totalTimeDFS) {
+            writer.write("\t\tFastest path (DFS): \n");
+            for (int i = 0; i < DFSPath.size(); i++) {
+                writer.write("\t\t\t" + DFSPath.getValueAt(i).getVertex().getData() + "\n");
+            }
+            writer.write("\t\tTotal cost: " + campusMapGraph.DFSTotalCost + "\n");
+        }
+        if (fastestTime == totalTimeDijkstras) {
+            writer.write("\t\tFastest path (dijkstras): \n");
+            for (int i = 0; i < dijkstrasPath.size(); i++) {
+                writer.write("\t\t\t" + dijkstrasPath.getValueAt(i).getVertex().getData() + "\n");
+            }
+            writer.write("\t\tTotal cost: " + campusMapGraph.dijkstrasTotalCost + "\n");
+        }
+        if (fastestTime == totalTimePrimsShort) {
+            writer.write("\t\tFastest path (Prims minimum): \n");
+            for (int i = 0; i < primsShortPath.size(); i++) {
+                writer.write("\t\t\t" + primsShortPath.getValueAt(i).getVertex().getData() + "\n");
+            }
+            writer.write("\t\tTotal cost: " + campusMapGraph.primsShortTotalCost + "\n");
+        }
+        if (fastestTime == totalTimePrimsLong) {
+            writer.write("\t\tFastest path (Prims maximum): \n");
+            for (int i = 0; i < primsLongPath.size(); i++) {
+                writer.write("\t\t\t" + primsLongPath.getValueAt(i).getVertex().getData() + "\n");
+            }
+            writer.write("\t\tTotal cost: " + campusMapGraph.primsLongTotalCost + "\n");
+        }
+
+        writer.write("\n\tWorkers want to drag out the task as long as possible without being obvious: \n");
+        writer.write("\t\tBest path: \n");
+        for (int i = 0; i < primsShortPath.size(); i++) {
+            writer.write("\t\t\t" + primsShortPath.getValueAt(i).getVertex().getData() + "\n");
+        }
+        writer.write("\t\tTotal cost: " + campusMapGraph.primsShortTotalCost + "\n");
+
+        writer.write("\nEfficiency (least distance): \n");
+        if (campusMapGraph.dijkstrasTotalCost > campusMapGraph.primsShortTotalCost) {
+            writer.write("\tPrims minimum is more efficient.\n");
+        }
+        if (campusMapGraph.dijkstrasTotalCost < campusMapGraph.primsShortTotalCost) {
+            writer.write("\tDijkstras is more efficient.\n");
+        }
+
+        writer.write("\nEfficiency (time analysis): \n");
+        if (totalTimeDijkstras > totalTimePrimsShort) {
+            writer.write("\tPrims minimum is more efficient.\n");
+        }
+        if (totalTimeDijkstras < totalTimePrimsShort) {
+            writer.write("\tDijkstras is more efficient.\n");
+        }
 
         writer.close();
     }
@@ -199,6 +308,8 @@ class Graph {
     public int BFSTotalCost;
     public int DFSTotalCost;
     public int dijkstrasTotalCost;
+    public int primsShortTotalCost;
+    public int primsLongTotalCost;
     
     public Graph() {
         adjList = new LinkedList();
@@ -515,10 +626,12 @@ class Graph {
         return maxindex;
     }
 
-    public int[] PrimsAlgorithmshort(String vertex) {
+    public LinkedList PrimsAlgorithmshort(String vertex) {
+        LinkedList visitedList = new LinkedList();
         int parent[] = new int[adjList.size()];
         boolean[] known = new boolean[adjList.size()];
         int[] cost = new int[adjList.size()];
+        primsShortTotalCost = 0;
 
         for (int i = 0; i < adjList.size(); i++) {
             known[i] = false;
@@ -529,9 +642,13 @@ class Graph {
         cost[adjList.positionOf(curPair)] = 0;
         parent[adjList.positionOf(curPair)] = -1;
         for(int v = 0; v < adjList.size()-1; v++) {
+            
             int minUnknownIndex = minKey(cost,known);
             known[minUnknownIndex] = true;
+
             curPair = adjList.getValueAt(minUnknownIndex);
+            visitedList.append(curPair);
+            primsShortTotalCost += cost[adjList.positionOf(curPair)];
         
             LinkedListEdges neighbors = curPair.getEdges();
             for (int i = 0; i < neighbors.size(); i++) {
@@ -545,20 +662,15 @@ class Graph {
                 }
             }
         }
-        for (int w = 0; w < adjList.size(); w++){
-            for (int i = 0; i < adjList.size(); i++){
-                if(parent[i] == w){
-                    System.out.println(adjList.getValueAt(parent[i]).getVertex().getData() + " to " + adjList.getValueAt(i).getVertex().getData() + "\t" + " -  Cost: " + cost[i]);
-                }
-            }
-        }
-        return cost;
+        return visitedList;
     }
 
-    public int[] PrimsAlgorithmlong(String vertex) {
+    public LinkedList PrimsAlgorithmlong(String vertex) {
+        LinkedList visitedList = new LinkedList();
         int parent[] = new int[adjList.size()];
         boolean[] known = new boolean[adjList.size()];
         int[] cost = new int[adjList.size()];
+        primsLongTotalCost = 0;
 
         for (int i = 0; i < adjList.size(); i++) {
             known[i] = false;
@@ -578,6 +690,8 @@ class Graph {
                 known[maxUnkownIndex] = true;
                 curPair = adjList.getValueAt(maxUnkownIndex);
             }
+            visitedList.append(curPair);
+            primsLongTotalCost += cost[adjList.positionOf(curPair)];
         
             LinkedListEdges neighbors = curPair.getEdges();
             for (int i = 0; i < neighbors.size(); i++) {
@@ -586,66 +700,12 @@ class Graph {
                 int weightofEdge = getEdge(curPair.getVertex().getData(),nextVertex.getData()).getWeight();
                 VertexEdgeListPair neighborPair = adjList.traverseTo(nextVertex.getData());
                 if(weightofEdge != 0 && known[adjList.positionOf(neighborPair)] == false && weightofEdge > cost[adjList.positionOf(neighborPair)]){
-                parent[adjList.positionOf(neighborPair)] = adjList.positionOf(curPair);
-                cost[adjList.positionOf(neighborPair)] = weightofEdge;
+                    parent[adjList.positionOf(neighborPair)] = adjList.positionOf(curPair);
+                    cost[adjList.positionOf(neighborPair)] = weightofEdge;
                 }
             }
         }
-        for (int w = 0; w < adjList.size(); w++){
-            for (int i = 0; i < adjList.size(); i++){
-                if(parent[i] == w){
-                    System.out.println(adjList.getValueAt(parent[i]).getVertex().getData() + " to " + adjList.getValueAt(i).getVertex().getData() + "\t" + " -  Cost: " + cost[i]);
-                }
-            }
-        }
-        return cost;
+        return visitedList;
     }
-
-
-
-//     public int[] PrimsAlgorithm(String vertex) {
-//         int parent[] = new int[adjList.size()];
-//         boolean[] known = new boolean[adjList.size()];
-//         int[] cost = new int[adjList.size()];
-
-//         for (int i = 0; i < adjList.size(); i++) {
-//             known[i] = false;
-//             cost[i] = Integer.MAX_VALUE;
-//         }
-        
-//         VertexEdgeListPair curPair = adjList.traverseTo(vertex);
-//         cost[adjList.positionOf(curPair)] = 0;
-//         parent[adjList.positionOf(curPair)] = -1;
-//         //known[adjList.positionOf(curPair)] = true;
-//         //System.out.println("Start cost: " + cost[adjList.positionOf(curPair)]);
-//         //System.out.println("Start Parent: " + parent[adjList.positionOf(curPair)]);
-//         //System.out.println("Start Known: " + known[adjList.positionOf(curPair)]);
-//         for(int v = 0; v < adjList.size()-1; v++) {
-            
-//             int minUnknownIndex = minKey(cost,known);
-//             known[minUnknownIndex] = true;
-//             curPair = adjList.getValueAt(minUnknownIndex);
-        
-//             LinkedListEdges neighbors = curPair.getEdges();
-//             //System.out.println("Cur: " + minUnknownIndex);
-//             for (int i = 0; i < neighbors.size(); i++) {
-            
-//                 Vertex nextVertex = neighbors.getValueAt(i).getOpposite(curPair.getVertex());
-//                 int weightofEdge = getEdge(curPair.getVertex().getData(),nextVertex.getData()).getWeight();
-//                 //System.out.println("Weight: " + weightofEdge);
-//                 VertexEdgeListPair neighborPair = adjList.traverseTo(nextVertex.getData());
-//                 //System.out.println("neighborPair: " + adjList.positionOf(neighborPair));
-//                 if(weightofEdge != 0 && known[adjList.positionOf(neighborPair)] == false && weightofEdge < cost[adjList.positionOf(neighborPair)]){
-//                     parent[adjList.positionOf(neighborPair)] = adjList.positionOf(curPair);
-//                     cost[adjList.positionOf(neighborPair)] = weightofEdge;
-//                 }
-//             }
-//         } 
-//         System.out.println("Edge \tWeight");
-//         for (int i = 0; i < adjList.size(); i++)
-//             System.out.println(parent[i] + " - " + i + "\t" + cost[i]);
-//         return cost;
-//     }
-// }
             
 }
