@@ -590,18 +590,25 @@ class Graph {
             }
         }
       }
-      /*for (int w = 0; w < adjList.size(); w++){
-        for (int i = 0; i < adjList.size(); i++){
-          if(parent[i] == w){
-            System.out.println(adjList.getValueAt(parent[i]).getVertex().getData() + " to " + adjList.getValueAt(i).getVertex().getData() + "\t" + " -  Cost: " + cost[i]);
-          }
-        }
-      }*/
+      //printspantree(vertex,parent,cost);
       return visitedList;
     }
 
+    public void printspantree(String vertex,int[] parent, int[] cost){
+      VertexEdgeListPair curPair = adjList.traverseTo(vertex);
+      int start = adjList.positionOf(curPair);
+   
+        for (int i = 0; i < adjList.size(); i++){
+          if(parent[i] == start){
+            System.out.println(adjList.getValueAt(parent[i]).getVertex().getData() + " to " + adjList.getValueAt(i).getVertex().getData() + "\t" + " -  Cost: " + cost[i]);
+            printspantree(adjList.getValueAt(i).getVertex().getData(),parent,cost);
+          
+        }
+      }
+    }
+
     public LinkedList PrimsAlgorithmlong(String vertex) {
-        LinkedList visitedList = new LinkedList();
+      LinkedList visitedList = new LinkedList();
         int parent[] = new int[adjList.size()];
         boolean[] known = new boolean[adjList.size()];
         int[] cost = new int[adjList.size()];
@@ -638,13 +645,7 @@ class Graph {
             }
         }
       }
-      /*for (int w = 0; w < adjList.size(); w++){
-        for (int i = 0; i < adjList.size(); i++){
-          if(parent[i] == w){
-            System.out.println(adjList.getValueAt(parent[i]).getVertex().getData() + " to " + adjList.getValueAt(i).getVertex().getData() + "\t" + " -  Cost: " + cost[i]);
-          }
-        }
-      }*/
+      //printspantree(vertex,parent,cost);
       return visitedList;
     }
             
